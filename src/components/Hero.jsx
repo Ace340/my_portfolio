@@ -73,16 +73,17 @@ const Hero = () => {
  return (
 	<>
 	 <section id="hero" className="noisy">
-		<h1 className="title">MOJITO</h1>
+		<h4 className="title">Hi, my name is</h4>
+		<h1 className="title">JUAN</h1>
 		
 		<img
-		 src="/images/hero-left-leaf.png"
-		 alt="left-leaf"
+		 src="/images/whitelogo.png"
+		 alt="taco-monkey-logo"
 		 className="left-leaf"
 		/>
 		<img
-		 src="/images/hero-right-leaf.png"
-		 alt="right-leaf"
+		 src="/images/whitelogo.png"
+		 alt="taco-monkey-logo"
 		 className="right-leaf"
 		/>
 		
@@ -91,19 +92,17 @@ const Hero = () => {
 		 
 		 <div className="content">
 			<div className="space-y-5 hidden md:block">
-			 <p>Cool. Crisp. Classic.</p>
+			 <p>WebXR. XR Development. Videogames </p>
 			 <p className="subtitle">
-				Sip the Spirit <br /> of Summer
+				Web Developer
 			 </p>
 			</div>
 			
-			<div className="view-cocktails">
+			<div className="view-description">
 			 <p className="subtitle">
-				Every cocktail on our menu is a blend of premium ingredients,
-				creative flair, and timeless recipes — designed to delight your
-				senses.
+				I like to create immersive worlds that define imaginations. Bring to life unbelievable ideas. Develop experiences that will transport you out of this world.
 			 </p>
-			 <a href="#cocktails">View cocktails</a>
+			 <a href="#cocktails">View Projects</a>
 			</div>
 		 </div>
 		</div>
