@@ -58,7 +58,7 @@ const Hero = () => {
 		trigger: "video",
 		start: startValue,
 		end: endValue,
-		scrub: true,
+		// scrub: true,
 		pin: true,
 	 },
 	});
@@ -76,7 +76,7 @@ const Hero = () => {
 		<h4 className="title">Hi, my name is</h4>
 		<h1 className="title">JUAN</h1>
 		
-		<img
+		{/* <img
 		 src="/images/whitelogo.png"
 		 alt="taco-monkey-logo"
 		 className="left-leaf"
@@ -85,7 +85,7 @@ const Hero = () => {
 		 src="/images/whitelogo.png"
 		 alt="taco-monkey-logo"
 		 className="right-leaf"
-		/>
+		/> */}
 		
 		<div className="body">
 		 {/* <img src="/images/arrow.png" alt="arrow" className="arrow" /> */}
@@ -113,8 +113,10 @@ const Hero = () => {
 		 ref={videoRef}
 		 muted
 		 playsInline
+		 autoPlay
+		 loop
 		 preload="auto"
-		 src="/videos/output.mp4"
+		 src="/videos/webvideo.mp4"
 		/>
 	 </div>
 	</>
