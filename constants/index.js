@@ -17,57 +17,47 @@ const navLinks = [
  },
 ];
 
-const cocktailLists = [
+const techStacks = [
  {
-	name: "Chapel Hill Shiraz",
-	country: "AU",
-	detail: "Battle",
-	price: "$10",
+	name: "React",
+	language: "JavaScript, TypeScript",
+	frameworks: "NextJs, Vite, ThreeJs",
  },
  {
-	name: "Caten Malbee",
-	country: "AU",
-	detail: "Battle",
-	price: "$49",
+	name: "Unity Engine",
+	language: "C#",
+	frameworks: "Meta XR Interaction SDK, VR Development",
  },
  {
-	name: "Rhino Pale Ale",
-	country: "CA",
-	detail: "750 ml",
-	price: "$20",
+	name: "WebXR",
+	language: "TypeScript, C#",
+	frameworks: "Needle Tools",
  },
  {
-	name: "Irish Guinness",
-	country: "IE",
-	detail: "600 ml",
-	price: "$29",
+	name: "SiteFinity",
+	language: "C#",
+	frameworks: ".NET Core",
  },
 ];
 
-const mockTailLists = [
+const workExperience = [
  {
-	name: "Tropical Bloom",
-	country: "US",
-	detail: "Battle",
-	price: "$10",
- },
- {
-	name: "Passionfruit Mint",
-	country: "US",
-	detail: "Battle",
-	price: "$49",
- },
- {
-	name: "Citrus Glow",
+	name: "Web Developer",
 	country: "CA",
-	detail: "750 ml",
-	price: "$20",
+	company: "Grand Erie District School Board",
+	status: "Current",
  },
  {
-	name: "Lavender Fizz",
-	country: "IE",
-	detail: "600 ml",
-	price: "$29",
+	name: "Partnership Manager",
+	country: "CH",
+	company: "Pagsmile",
+	status: "Sep 22 - Feb 24",
+ },
+ {
+	name: "System Analyst Developer",
+	country: "PE",
+	company: "JAMSOFT",
+	status: "Jul 20 - Dec 21",
  },
 ];
 
@@ -171,8 +161,8 @@ const allCocktails = [
 
 export {
  navLinks,
- cocktailLists,
- mockTailLists,
+ techStacks,
+ workExperience,
  profileLists,
  featureLists,
  goodLists,
