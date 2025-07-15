@@ -29,26 +29,18 @@ const About = () => {
 	 <div className="mb-16 md:px-0 px-5">
 		<div className="content">
 		 <div className="md:col-span-8">
-			<p className="badge">Best Cocktails</p>
+			<p className="badge">Projects</p>
 			<h2>
-			 Where every detail matters <span className="text-white">-</span>
-				from muddle to garnish
+			 Where every idea comes to life <span className="text-white">-</span>
+				no matter how big you dream it
 			</h2>
 		 </div>
 		 
 		 <div className="sub-content">
 			<p>
-			 Every cocktail we serve is a reflection of our obsession with detail — from the first muddle to the final garnish. That care is what turns a simple drink into something truly memorable.
+			 Think about a cool text to place here
 			</p>
 			
-			<div>
-			 <p className="md:text-3xl text-xl font-bold">
-				<span>4.5</span>/5
-			 </p>
-			 <p className="text-sm text-white-100">
-				More than +12000 customers
-			 </p>
-			</div>
 		 </div>
 		</div>
 	 </div>
@@ -56,7 +48,7 @@ const About = () => {
 	 <div className="top-grid">
 		<div className="md:col-span-3">
 		 <div  className="noisy" />
-		 <img src="/images/abt1.png" alt="grid-img-1" />
+		 <a href='https://tacomonkeystudio.itch.io/ghost-attack' target='_blank' className='cursor-pointer'><img src="/images/ghost-attack.png" alt="grid-img-1" /></a>		 
 		</div>
 		
 		<div className="md:col-span-6">
@@ -66,7 +58,7 @@ const About = () => {
 		
 		<div className="md:col-span-3">
 		 <div  className="noisy" />
-		 <img src="/images/abt5.png" alt="grid-img-5" />
+		 <a href='https://tacomonkeystudio.itch.io/tiny-rebels-v11' target='_blank' className='cursor-pointer'><img src="/images/tinyrebels.png" alt="grid-img-5" /></a>		 
 		</div>
 	 </div>
 	 
