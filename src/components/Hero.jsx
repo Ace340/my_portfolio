@@ -102,7 +102,7 @@ const Hero = () => {
 			 <p className="subtitle">
 				I like to create immersive worlds that define imaginations. Bring to life unbelievable ideas. Develop experiences that will transport you out of this world.
 			 </p>
-			 <a href="#cocktails">View Projects</a>
+			 <a href="#about">View Projects</a>
 			</div>
 		 </div>
 		</div>

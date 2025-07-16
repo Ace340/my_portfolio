@@ -6,7 +6,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { featureLists, goodLists } from '../../constants/index.js';
 
-const Art = () => {
+const VirtualReality = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const canvasRef = useRef(null);
   const sceneRef = useRef(null);
@@ -44,7 +44,9 @@ const Art = () => {
         const box = new THREE.Box3().setFromObject(modelRef.current);
         const center = box.getCenter(new THREE.Vector3());
         modelRef.current.position.sub(center);
-        modelRef.current.scale.set(4, 4, 4);
+        // Adjust scale based on device
+        const scale = isMobile ? 2 : 4; // Smaller scale for mobile
+        modelRef.current.scale.set(scale, scale, scale);
       },
       undefined,
       (error) => console.error('Error loading GLTF model:', error)
@@ -82,7 +84,7 @@ const Art = () => {
 
     const maskTimeline = gsap.timeline({
       scrollTrigger: {
-        trigger: '#art',
+        trigger: '#virtual-reality',
         start,
         end: 'bottom center',
         scrub: 1.5,
@@ -96,7 +98,7 @@ const Art = () => {
   }, []);
 
   return (
-    <div id="art">
+    <div id="virtual-reality">
       <div className="container mx-auto h-full pt-20">
         <h2 className="will-fade">The Future</h2>
 
@@ -128,10 +130,10 @@ const Art = () => {
         </div>
 
         <div className="masked-container">
-          <h2 className="will-fade">Sip-Worthy Perfection</h2>
+          <h2 className="will-fade">Bring ideas to life</h2>
           <div id="masked-content">
-            <h3>Made with Craft, Poured with Passion</h3>
-            <p>This isn’t just a drink. It’s a carefully crafted moment made just for you.</p>
+            <h3>Reality is no longer the limit</h3>
+            <p>A VR Experience can communicate more than thousand words.</p>
           </div>
         </div>
       </div>
@@ -139,4 +141,4 @@ const Art = () => {
   );
 };
 
-export default Art;
+export default VirtualReality;

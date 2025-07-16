@@ -77,17 +77,17 @@ const profileLists = [
 ];
 
 const featureLists = [
- "Perfectly balanced blends",
- "Garnished to perfection",
- "Ice-cold every time",
- "Expertly shaken & stirred",
+ "Immersive Experience",
+ "Cross-Platform Development",
+ "3D Content Creation",
+ "Interaction Systems",
 ];
 
 const goodLists = [
- "Handpicked ingredients",
- "Signature techniques",
- "Bartending artistry in action",
- "Freshly muddled flavors",
+ "Product Visualization",
+ "Training & Simulation",
+ "Gaming & Education",
+ "Web XR",
 ];
 
 const storeInfo = {

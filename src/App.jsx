@@ -8,6 +8,7 @@ import Art from './components/Art.jsx'
 import Menu from './components/Menu.jsx'
 import Contact from './components/Contact.jsx'
 import Techstack from './components/Techstack.jsx'
+import VirtualReality from './components/VirtualReality.jsx';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -18,7 +19,8 @@ const App = () => {
 	 <Hero />
 	 <Techstack />
 	 <About />
-	 <Art />
+	 <VirtualReality />
+	 {/* <Art /> */}
 	 <Menu />
 	 <Contact />
 	</main>

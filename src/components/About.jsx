@@ -53,7 +53,7 @@ const About = () => {
 		
 		<div className="md:col-span-6">
 		 <div  className="noisy" />
-		 <img src="/images/abt2.png" alt="grid-img-2" />
+		 <a href='https://mintsonthehouse.com/' target='_blank' className='cursor-pointer'><img src="/images/port1.png" alt="grid-img-2" /></a>		 
 		</div>
 		
 		<div className="md:col-span-3">
@@ -65,12 +65,12 @@ const About = () => {
 	 <div className="bottom-grid">
 		<div className="md:col-span-8">
 		 <div  className="noisy" />
-		 <img src="/images/abt3.png" alt="grid-img-3" />
+		 <a href='https://pangea.com.ve/' target='_blank' className='cursor-pointer'><img src="/images/port2.png" alt="grid-img-3" /></a>		 
 		</div>
 		
 		<div className="md:col-span-4">
 		 <div  className="noisy" />
-		 <img src="/images/abt4.png" alt="grid-img-4" />
+		 <a href='https://solucionesfino.com/' target='_blank' className='cursor-pointer'><img src="/images/port4.png" alt="grid-img-4" /></a>		 
 		</div>
 	 </div>
 	 
