@@ -76,19 +76,7 @@ const Hero = () => {
 		<h4 className="title">Hi, my name is</h4>
 		<h1 className="title">JUAN</h1>
 		
-		{/* <img
-		 src="/images/whitelogo.png"
-		 alt="taco-monkey-logo"
-		 className="left-leaf"
-		/>
-		<img
-		 src="/images/whitelogo.png"
-		 alt="taco-monkey-logo"
-		 className="right-leaf"
-		/> */}
-		
 		<div className="body">
-		 {/* <img src="/images/arrow.png" alt="arrow" className="arrow" /> */}
 		 
 		 <div className="content">
 			<div className="space-y-5 hidden md:block">
@@ -102,7 +90,7 @@ const Hero = () => {
 			 <p className="subtitle">
 				I like to create immersive worlds that define imaginations. Bring to life unbelievable ideas. Develop experiences that will transport you out of this world.
 			 </p>
-			 <a href="#about">View Projects</a>
+			 <a href="#projects">View Projects</a>
 			</div>
 		 </div>
 		</div>
