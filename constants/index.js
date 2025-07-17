@@ -110,52 +110,42 @@ const socials = [
  {
 	name: "Instagram",
 	icon: "/images/insta.png",
-	url: "#",
+	url: "https://www.instagram.com/ace340/",
  },
  {
-	name: "X (Twitter)",
-	icon: "/images/x.png",
-	url: "#",
- },
- {
-	name: "Facebook",
-	icon: "/images/fb.png",
-	url: "#",
+	name: "Linkedin",
+	icon: "/images/linkedin-logo2.png",
+	url: "https://www.linkedin.com/in/juan-aceved0/",
  },
 ];
 
-const allCocktails = [
+const allPassions = [
  {
 	id: 1,
-	name: "Classic Mojito",
-	image: "/images/drink1.png",
-	title: "Simple Ingredients, Bold Flavor",
+	name: "Taco Monkey Studio",
+	image: "/images/whitelogo.png",
+	title: "Videogame Studio",
 	description:
-	 "Made with tequila, lime juice, and orange liqueur, the Margarita is easy to make and full of character. Add a salted rim for the perfect drink on summer nights.",
+	 "Developing the Videogames of the future. News about latest VR techonologies and new Games in the industry.",
+	media: "https://www.youtube.com/@TacoMonkeyStudio",
  },
  {
 	id: 2,
-	name: "Raspberry Mojito",
-	image: "/images/drink2.png",
-	title: "A Zesty Classic That Never Fails",
+	name: "La Playa Vision",
+	image: "/images/playavision.png",
+	title: "The world from a different perspective",
 	description:
-	 "The Margarita is a classic that balances tangy lime, smooth tequila, and a touch of sweetness. Shaken, frozen, or on the rocks—it’s always crisp & refreshing.",
+	 "Exploring the world with my camera. Discovering secret spots on every trip I make.",
+	media: "https://www.youtube.com/@LaPlayaVision",
  },
  {
 	id: 3,
-	name: "Violet Breeze",
-	image: "/images/drink3.png",
-	title: "Simple Ingredients, Bold Flavor",
+	name: "Mints on The house",
+	image: "/images/mints.png",
+	title: "Who the F*ck eats Mints?",
 	description:
-	 "Made with tequila, lime juice, and orange liqueur, the Margarita is easy to make and full of character. Add a salted rim for the perfect drink on summer nights.",
- },
- {
-	id: 4,
-	name: "Curacao Mojito",
-	image: "/images/drink4.png",
-	title: "Crafted With Care, Poured With Love",
-	description:
-	 "Each cocktail is made with fresh ingredients and a passion for perfecting every pour, whether you're celebrating or simply relaxing.",
+	 "Music, friends and art. Giving happiness to the world through House Music.",
+	media: "https://www.youtube.com/@MINTSOnTheHouse",
  },
 ];
 
@@ -169,5 +159,5 @@ export {
  openingHours,
  storeInfo,
  socials,
- allCocktails,
+ allPassions,
 };
