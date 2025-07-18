@@ -92,11 +92,11 @@ body {
         @apply relative z-10 min-h-dvh w-full border border-transparent;
 
         h1 {
-            @apply md:mt-10 mt-40 text-8xl md:text-[20vw] leading-none text-center font-modern-negra;
+            @apply md:mt-10 mt-10 text-8xl md:text-[20vw] leading-none text-center font-modern-negra;
         }
         
         h4 {
-            @apply md:mt-32 mt-20 mb-0 text-[16px] md:text-[5vw] leading-none text-center;
+            @apply md:mt-32 mt-50 mb-0 text-[16px] md:text-[5vw] leading-none text-center;
         }
 
         .left-leaf {
@@ -199,7 +199,7 @@ body {
             }
 
             .sub-content {
-                @apply md:col-span-4 space-y-5 flex flex-col justify-between;
+                @apply md:col-span-4 space-y-5 mt-30 flex flex-col justify-between;
 
                 p {
                     @apply text-lg;

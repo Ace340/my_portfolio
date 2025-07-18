@@ -38,9 +38,8 @@ const About = () => {
 		 
 		 <div className="sub-content">
 			<p>
-			 Think about a cool text to place here
-			</p>
-			
+			 Using the power of WebXR and VR, I build immersive experiences that are accessible across platforms
+			</p>			
 		 </div>
 		</div>
 	 </div>

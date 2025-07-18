@@ -90,22 +90,6 @@ const goodLists = [
  "Web XR",
 ];
 
-const storeInfo = {
- heading: "Where to Find Us",
- address: "456, Raq Blvd. #404, Los Angeles, CA 90210",
- contact: {
-	phone: "(555) 987-6543",
-	email: "hello@jsmcocktail.com",
- },
-};
-
-const openingHours = [
- { day: "Mon–Thu", time: "11:00am – 12am" },
- { day: "Fri", time: "11:00am – 2am" },
- { day: "Sat", time: "9:00am – 2am" },
- { day: "Sun", time: "9:00am – 1am" },
-];
-
 const socials = [
  {
 	name: "Instagram",
@@ -156,8 +140,6 @@ export {
  profileLists,
  featureLists,
  goodLists,
- openingHours,
- storeInfo,
  socials,
  allPassions,
 };

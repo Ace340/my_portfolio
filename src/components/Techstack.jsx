@@ -23,10 +23,7 @@ const Techstack = () => {
  })
  
  return (
-	<section id="techstack" className="noisy">
-	 <img src="/images/whitelogo.png" alt="taco-monkey-logo" id="c-left-leaf" />
-	 <img src="/images/whitelogo.png" alt="taco-monkey-logo" id="c-right-leaf" />
-	 
+	<section id="techstack" className="noisy">	 
 	 <div className="list">
 		<div className="popular">
 		 <h2>My Tech Stack:</h2>

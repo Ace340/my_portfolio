@@ -82,7 +82,7 @@ const Hero = () => {
 			<div className="space-y-5 hidden md:block">
 			 <p>WebXR. XR Development. Videogames </p>
 			 <p className="subtitle">
-				Web Developer
+				XR Developer
 			 </p>
 			</div>
 			

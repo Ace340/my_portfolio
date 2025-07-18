@@ -1,4 +1,4 @@
-import { openingHours, socials } from '../../constants/index.js'
+import { socials } from '../../constants/index.js'
 import { useGSAP } from '@gsap/react'
 import { SplitText} from 'gsap/all';
 import gsap from 'gsap';
@@ -37,7 +37,7 @@ const Contact = () => {
 		
 		<div>
 		 <h3>Contact</h3>
-		 <p>(519) 781-4591</p>
+		 <p>+1 (519) 781-4591</p>
 		 <p>acevedojf@gmail.com</p>
 		</div>
 		
