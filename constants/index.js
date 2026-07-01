@@ -61,21 +61,6 @@ const workExperience = [
  },
 ];
 
-const profileLists = [
- {
-	imgPath: "/images/profile1.png",
- },
- {
-	imgPath: "/images/profile2.png",
- },
- {
-	imgPath: "/images/profile3.png",
- },
- {
-	imgPath: "/images/profile4.png",
- },
-];
-
 const featureLists = [
  "Immersive Experience",
  "Cross-Platform Development",
@@ -137,7 +122,6 @@ export {
  navLinks,
  techStacks,
  workExperience,
- profileLists,
  featureLists,
  goodLists,
  socials,

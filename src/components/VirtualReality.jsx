@@ -6,10 +6,24 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { featureLists, goodLists } from '../../constants/index.js';
 
+// Three.js scene configuration
+const SCENE_CONFIG = {
+  fov: 75,
+  aspect: 1,
+  near: 0.1,
+  far: 1000,
+  cameraZ: 5,
+  initialSize: 500,
+  ambientIntensity: 0.5,
+  directionalIntensity: 0.5,
+  rotationSpeed: 0.01,
+};
+
+const getModelScale = (isMobile) => (isMobile ? 2 : 4);
+
 const VirtualReality = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const canvasRef = useRef(null);
-  const sceneRef = useRef(null);
   const modelRef = useRef(null);
 
   // Set up Three.js scene
@@ -18,25 +32,29 @@ const VirtualReality = () => {
 
     // Scene setup
     const scene = new THREE.Scene();
-    sceneRef.current = scene;
-    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-    camera.position.z = 5;
+    const camera = new THREE.PerspectiveCamera(
+      SCENE_CONFIG.fov,
+      SCENE_CONFIG.aspect,
+      SCENE_CONFIG.near,
+      SCENE_CONFIG.far,
+    );
+    camera.position.z = SCENE_CONFIG.cameraZ;
 
     const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, alpha: true });
-    renderer.setSize(500, 500); // Adjust size as needed
+    renderer.setSize(SCENE_CONFIG.initialSize, SCENE_CONFIG.initialSize);
     renderer.setPixelRatio(window.devicePixelRatio);
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, SCENE_CONFIG.ambientIntensity);
     scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, SCENE_CONFIG.directionalIntensity);
     directionalLight.position.set(0, 1, 1);
     scene.add(directionalLight);
 
     // Load 3D model
     const loader = new GLTFLoader();
     loader.load(
-      '/models/vrheadset.glb', // Path to your GLTF model
+      '/models/vrheadset.glb',
       (gltf) => {
         modelRef.current = gltf.scene;
         scene.add(modelRef.current);
@@ -44,19 +62,18 @@ const VirtualReality = () => {
         const box = new THREE.Box3().setFromObject(modelRef.current);
         const center = box.getCenter(new THREE.Vector3());
         modelRef.current.position.sub(center);
-        // Adjust scale based on device
-        const scale = isMobile ? 2 : 4; // Smaller scale for mobile
-        modelRef.current.scale.set(scale, scale, scale);
+        modelRef.current.scale.setScalar(getModelScale(isMobile));
       },
       undefined,
-      (error) => console.error('Error loading GLTF model:', error)
+      (error) => console.error('Error loading GLTF model:', error),
     );
 
     // Animation loop with rotation
+    let animationFrameId;
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
       if (modelRef.current) {
-        modelRef.current.rotation.y += 0.01; // Continuous rotation around Y-axis
+        modelRef.current.rotation.y += SCENE_CONFIG.rotationSpeed;
       }
       renderer.render(scene, camera);
     };
@@ -74,6 +91,7 @@ const VirtualReality = () => {
 
     // Cleanup
     return () => {
+      cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
     };
