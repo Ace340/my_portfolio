@@ -1,116 +1,91 @@
-import { useGSAP } from '@gsap/react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { SplitText } from 'gsap/all';
-import { useRef } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import { createHeroScene } from './hero/createHeroScene.js';
 
+gsap.registerPlugin(ScrollTrigger);
+
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/**
+ * Hero — the Signature Moment (ADR-0001, CONTEXT.md).
+ *
+ * Reactive Three.js 3D type "JUAN": the scene renders + eases input (createHeroScene);
+ * this shell wires cursor → setPointer and scroll → setScroll. Reduced-motion users
+ * get a static frame with no input wiring. The HTML overlay states the Primary
+ * Identity + a single CTA so the Funnel's "who is this, instantly" (Success #1)
+ * holds even before WebGL loads.
+ */
 const Hero = () => {
-  const videoRef = useRef();
+  const rootRef = useRef(null);
+  const canvasRef = useRef(null);
+  const apiRef = useRef(null);
 
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-
-  useGSAP(() => {
-    const heroSplit = new SplitText('.title', {
-      type: 'chars, words',
+  // 1. mount the 3D scene
+  useEffect(() => {
+    if (!canvasRef.current) return undefined;
+    const hero = createHeroScene(canvasRef.current, {
+      reducedMotion: prefersReducedMotion(),
     });
-
-    const paragraphSplit = new SplitText('.subtitle', {
-      type: 'lines',
-    });
-
-    // Apply text-gradient class once before animating
-    heroSplit.chars.forEach((char) => char.classList.add('text-gradient'));
-
-    gsap.from(heroSplit.chars, {
-      yPercent: 100,
-      duration: 1.8,
-      ease: 'expo.out',
-      stagger: 0.06,
-    });
-
-    gsap.from(paragraphSplit.lines, {
-      opacity: 0,
-      yPercent: 100,
-      duration: 1.8,
-      ease: 'expo.out',
-      stagger: 0.06,
-      delay: 1,
-    });
-
-    gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: '#hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      })
-      .to('.right-leaf', { y: 200 }, 0)
-      .to('.left-leaf', { y: -200 }, 0)
-      .to('.arrow', { y: 100 }, 0);
-
-    const startValue = isMobile ? 'top 50%' : 'center 60%';
-    const endValue = isMobile ? '120% top' : 'bottom top';
-
-    let tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: 'video',
-        start: startValue,
-        end: endValue,
-        // scrub: true,
-        pin: true,
-      },
-    });
-
-    const video = videoRef.current;
-    const playScrubAnimation = () => {
-      tl.to(video, { currentTime: video.duration });
+    apiRef.current = hero;
+    return () => {
+      hero.dispose();
+      apiRef.current = null;
     };
-
-    if (video.readyState >= 1) {
-      playScrubAnimation();
-    } else {
-      video.addEventListener('loadedmetadata', playScrubAnimation, { once: true });
-    }
   }, []);
 
+  // 2. cursor → uMouse (the scene eases the uniform toward this target in its RAF)
+  useEffect(() => {
+    if (prefersReducedMotion()) return undefined;
+    const onMove = (e) => {
+      const api = apiRef.current;
+      if (!api) return;
+      const x = (e.clientX / window.innerWidth) * 2 - 1; // -1..1
+      const y = -(e.clientY / window.innerHeight) * 2 + 1; // -1..1, flip Y to match NDC
+      api.setPointer(x, y);
+    };
+    window.addEventListener('pointermove', onMove);
+    return () => window.removeEventListener('pointermove', onMove);
+  }, []);
+
+  // 3. scroll → uScroll (scrubbed progress 0..1 across the hero)
+  useGSAP(
+    () => {
+      if (prefersReducedMotion() || !rootRef.current) return;
+      const st = ScrollTrigger.create({
+        trigger: rootRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+        onUpdate: (self) => apiRef.current?.setScroll(self.progress),
+      });
+      return () => st.kill(); // belt-and-suspenders; useGSAP also reverts
+    },
+    { scope: rootRef, dependencies: [] },
+  );
+
   return (
-    <>
-      <section id="hero">
-        <h4 className="title">Hi, my name is</h4>
-        <h1 className="title">JUAN</h1>
+    <section id="hero" ref={rootRef} className="overflow-hidden">
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
-        <div className="body">
-          <div className="content">
-            <div className="space-y-5 hidden md:block">
-              <p>WebXR. XR Development. Videogames</p>
-              <p className="subtitle">XR Developer</p>
-            </div>
+      {/* Heading for assistive tech — the 3D text is invisible to screen readers. */}
+      <h1 className="sr-only">JUAN — Front-end Creative Developer</h1>
 
-            <div className="view-description">
-              <p className="subtitle">
-                I like to create immersive worlds that define imaginations. Bring to life
-                unbelievable ideas. Develop experiences that will transport you out of this world.
-              </p>
-              <a href="#projects">View Projects</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="video absolute inset-0">
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          autoPlay
-          loop
-          preload="auto"
-          src="/videos/webvideo.mp4"
-        />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-center gap-5 px-5 pb-16 text-center">
+        <p className="text-sm uppercase tracking-[0.3em] text-white/70 md:text-base">
+          Front-end Creative Developer
+        </p>
+        <a
+          href="#projects"
+          className="pointer-events-auto rounded-full border border-white/30 px-6 py-2 text-sm text-white/90 transition-colors hover:border-yellow hover:text-yellow"
+        >
+          View Work
+        </a>
       </div>
-    </>
+    </section>
   );
 };
 
