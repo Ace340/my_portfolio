@@ -1,133 +1,96 @@
 <div align="center">
   <br />
-    <a href="https://www.youtube.com/watch?v=AW1yfBKRMKc" target="_blank">
-      <img src="public/readme/hero.png" alt="Project Banner">
-    </a>
+    <img src="public/images/whitelogo.png" alt="Portfolio Banner" width="120">
   <br />
 
    <div>
-    <img src="https://img.shields.io/badge/-React-blue?style=for-the-badge&logo=react&logoColor=white" />
+    <img src="https://img.shields.io/badge/-React-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
     <img src="https://img.shields.io/badge/-GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white" />
+    <img src="https://img.shields.io/badge/-Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white" />
     <img src="https://img.shields.io/badge/-Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+    <img src="https://img.shields.io/badge/-Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
   </div>
 
-  <h3 align="center">Stunning GSAP Cocktail Website</h3>
+  <h3 align="center">Juan Acevedo — XR Developer</h3>
 
    <div align="center">
-     Build this project step by step with our detailed tutorial on <a href="https://www.youtube.com/@javascriptmastery/videos" target="_blank"><b>JavaScript Mastery</b></a> YouTube. Join the JSM family!
-    </div>
+     Immersive experiences, cross-platform XR development, and 3D content creation.
+   </div>
 </div>
 
-## 📋 <a name="table">Table of Contents</a>
+## Table of Contents
 
-1. 🤖 [Introduction](#introduction)
-2. ⚙️ [Tech Stack](#tech-stack)
-3. 🔋 [Features](#features)
-4. 🤸 [Quick Start](#quick-start)
-5. 🔗 [Assets](#links)
-6. 🚀 [More](#more)
+1. [About](#about)
+2. [Tech Stack](#tech-stack)
+3. [Features](#features)
+4. [Sections](#sections)
+5. [Quick Start](#quick-start)
+6. [Links](#links)
 
-## 🚨 Tutorial
+## About
 
-This repository contains the code corresponding to an in-depth tutorial available on our YouTube channel, <a href="https://www.youtube.com/@javascriptmastery/videos" target="_blank"><b>JavaScript Mastery</b></a>.
+I build immersive worlds that push the boundaries of imagination — from WebXR experiences and VR games to interactive 3D applications. Currently working as a Web Developer at Grand Erie District School Board, I bring together frontend engineering, game development, and spatial computing to create experiences that transport users beyond the screen.
 
-If you prefer visual learning, this is the perfect resource for you. Follow our tutorial to learn how to build projects like these step-by-step in a beginner-friendly manner!
+## Tech Stack
 
-<a href="https://www.youtube.com/watch?v=AW1yfBKRMKc" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/1736fca5-a031-4854-8c09-bc110e3bc16d" /></a>
+- **[React](https://react.dev/)** — Component-based UI architecture powering the portfolio with reusable, state-driven modules.
+- **[GSAP](https://gsap.com/)** — High-performance animations including SplitText reveals, ScrollTrigger timelines, parallax scrolling, and scroll-synced video playback.
+- **[Three.js](https://threejs.org/)** — 3D rendering with a real-time VR headset model, dynamic lighting, and continuous rotation animation.
+- **[Tailwind CSS](https://tailwindcss.com/)** — Utility-first styling for responsive, maintainable UI across all screen sizes.
+- **[Vite](https://vitejs.dev/)** — Fast build tool with instant HMR and optimized production builds.
+- **[Unity](https://unity.com/)** — XR game development with Meta XR Interaction SDK.
+- **[WebXR](https://www.w3.org/TR/webxr/)** — Cross-platform XR experiences via Needle Tools.
+- **[Sitefinity](https://www.progress.com/sitefinity)** — Enterprise CMS development with .NET Core.
 
-## <a name="introduction">🤖 Introduction</a>
+## Features
 
-Build and deploy a stunning GSAP-powered cocktail website using React and Tailwind CSS—a modern, scroll-driven experience packed with advanced animations. Bring your design to life with dynamic SplitText reveals, smooth parallax scrolling, and scroll-triggered effects using GSAP’s ScrollTrigger. Lock sections in place with pinned animations, sync video playback to scroll position for cinematic storytelling, and enhance visual impact with scroll-based image masking. Create a custom animated carousel, craft seamless timeline animations across sections, and ensure a fully responsive UI that adapts beautifully across all screen sizes.
+- **3D VR Headset Model** — Interactive Three.js scene with a rotating GLTF model, dynamic lighting, and responsive sizing.
+- **Scroll-Triggered Animations** — GSAP ScrollTrigger powers pinned sections, masked reveals, parallax effects, and staggered text entrances.
+- **SplitText Typography** — Character and word-level animations for dynamic title reveals.
+- **Scroll-Synced Video** — Hero video playback synced to scroll position for cinematic storytelling.
+- **Responsive Design** — Adaptive layouts and animations tailored for mobile and desktop via `react-responsive`.
+- **Project Showcase** — Grid layout with linked project cards (Ghost Attack, Tiny Rebels, Mints on the House, Pangea, Soluciones Fino).
 
+## Sections
 
-If you're getting started and need assistance or face any bugs, join our active Discord community with over **50k+** members. It's a place where people help each other out.
+| Section | Description |
+|---------|-------------|
+| **Hero** | Animated intro with scroll-driven video, name reveal, and tagline |
+| **Tech Stack** | Technologies and frameworks with experience details |
+| **About / Work** | Professional experience (Grand Erie DSB, Pagsmile, JAMSOFT) |
+| **Projects** | Portfolio projects with live demo links |
+| **Virtual Reality** | 3D XR showcase with rotating VR headset model |
+| **Passions** | Personal projects — Taco Monkey Studio, La Playa Vision, Mints on the House |
+| **Contact** | Social links and contact information |
 
-<a href="https://discord.com/invite/n6EdbFJ" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/618f4872-1e10-42da-8213-1d69e486d02e" /></a>
+## Quick Start
 
-## <a name="tech-stack">⚙️ Tech Stack</a>
-
-
-- **[GSAP](https://gsap.com/)** is a powerful JavaScript animation library used in this project to create dynamic, scroll-driven visuals. Features include SplitText animations for bold text reveals, ScrollTrigger for timeline control, parallax scrolling, pinned sections, scroll-synced video playback, seamless multi-section timelines, image masking effects, and a fully custom animated carousel.
-
-- **[React](https://react.dev/)** is a declarative JavaScript library for building interactive UIs. It provides the component structure for modular development, allowing smooth integration of GSAP animations, reusable logic for scroll behavior, and support for responsive layout and state-driven UI features like carousels and video sections.
-
-- **[Tailwind CSS](https://tailwindcss.com/)** is a utility-first CSS framework that allows developers to design custom user interfaces by applying low-level utility classes directly in HTML, streamlining the design process.
-
-- **[Vite](https://vitejs.dev/)** is a lightning-fast build tool and development server that powers this project’s workflow. It enables instant hot module replacement, fast startup, and optimized production builds—ideal for an animation-heavy React site with smooth, real-time development feedback and minimal config.
-
-## <a name="features">🔋 Features</a>
-
-👉 **SplitText Animations**: Create impactful text reveals using GSAP’s SplitText for dynamic intros and section highlights.
-
-👉 **ScrollTrigger Effects**: Power scroll-based animations and timeline control with GSAP’s ScrollTrigger.
-
-👉 **Parallax Scrolling**: Add immersive depth with smooth parallax effects that respond to user scroll.
-
-👉 **Pinned Sections**: Lock sections in view while animating content for engaging scroll experiences.
-
-👉 **Scroll-Synced Video Playback**: Sync video progress with scroll position for cinematic storytelling.
-
-👉 **Image Masking Effects**: Use scroll-triggered pins and masks for visually striking image transitions.
-
-👉 **Custom Carousel**: Build a fully customized carousel with multiple navigation options and animated slides.
-
-👉 **Seamless Timeline Animations**: Craft smooth animation timelines that span across multiple sections.
-
-👉 **Responsive Design**: Ensure fluid UI and adaptive GSAP animations across all screen sizes.
-
-And many more, including enhanced security and optimized video performance!
-
-
-## <a name="quick-start">🤸 Quick Start</a>
-
-Follow these steps to set up the project locally on your machine.
-
-**Prerequisites**
-
-Make sure you have the following installed on your machine:
-
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/en)
-- [npm](https://www.npmjs.com/) (Node Package Manager)
-
-**Cloning the Repository**
+**Prerequisites:** Git, Node.js, npm
 
 ```bash
-git clone https://github.com/adrianhajdin/gsap_cocktails.git
-cd gsap_cocktails
-```
+# Clone the repository
+git clone https://github.com/yourusername/my_portfolio.git
+cd my_portfolio
 
-**Installation**
-
-Install the project dependencies using npm:
-
-```bash
+# Install dependencies
 npm install
-```
 
-**Running the Project**
-
-```bash
+# Start the development server
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser to view the project.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-## <a name="links">🔗 Assets</a>
+## Links
 
-Assets and snippets used in the project can be found in the **[Video Kit](https://jsm.dev/cocktail-kit)**.
+- **[Taco Monkey Studio](https://www.youtube.com/@TacoMonkeyStudio)** — VR game development
+- **[La Playa Vision](https://www.youtube.com/@LaPlayaVision)** — Travel photography
+- **[Mints on the House](https://www.youtube.com/@MINTSOnTheHouse)** — House music & art
+- **[Ghost Attack](https://tacomonkeystudio.itch.io/ghost-attack)** — VR game
+- **[Tiny Rebels](https://tacomonkeystudio.itch.io/tiny-rebels-v11)** — Strategy game
+- **[Mints on the House](https://mintsonthehouse.com/)** — Music event site
 
-<a href="https://jsm.dev/cocktail-kit" target="_blank">
-  <img src="public/readme/videokit.png" alt="Video Kit Banner">
-</a>
+## Socials
 
-## <a name="more">🚀 More</a>
-
-**Advance your skills with Next.js Pro Course**
-
-Enjoyed creating this project? Dive deeper into our PRO courses for a richer learning adventure. They're packed with
-detailed explanations, cool features, and exercises to boost your skills. Give it a go!
-
-<a href="https://jsm.dev/cocktail-nextjs" target="_blank">
-  <img src="public/readme/jsmpro.png" alt="Project Banner">
-</a>
+[![Instagram](https://img.shields.io/badge/Instagram-%40ace340-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/ace340/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Juan%20Acevedo-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/juan-aceved0/)
