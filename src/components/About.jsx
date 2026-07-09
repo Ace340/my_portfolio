@@ -38,8 +38,8 @@ const About = () => {
 
           <div className="sub-content">
             <p>
-              Using the power of WebXR and VR, I build immersive experiences that are accessible
-              across platforms
+              Selected interactive front-end work — interfaces built with React, Three.js and GSAP,
+              where motion and 3D are part of the craft.
             </p>
           </div>
         </div>

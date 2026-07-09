@@ -6,7 +6,6 @@ import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
 import Contact from './components/Contact.jsx';
 import Techstack from './components/Techstack.jsx';
-import VirtualReality from './components/VirtualReality.jsx';
 import Passions from './components/Passions.jsx';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -18,7 +17,6 @@ const App = () => {
       <Hero />
       <Techstack />
       <About />
-      <VirtualReality />
       <Passions />
       <Contact />
     </main>

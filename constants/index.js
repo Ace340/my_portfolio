@@ -24,17 +24,12 @@ const techStacks = [
 	frameworks: "NextJs, Vite, ThreeJs",
  },
  {
-	name: "Unity Engine",
-	language: "C#",
-	frameworks: "Meta XR Interaction SDK, VR Development",
+ 	name: "Unity Engine",
+ 	language: "C#",
+ 	frameworks: "Game Development, Level Design",
  },
  {
-	name: "WebXR",
-	language: "TypeScript, C#",
-	frameworks: "Needle Tools",
- },
- {
-	name: "SiteFinity",
+ 	name: "SiteFinity",
 	language: "C#",
 	frameworks: ".NET Core",
  },
