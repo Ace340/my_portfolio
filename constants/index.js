@@ -99,10 +99,67 @@ const allPassions = [
  },
 ];
 
+// Selected Work — front-end case studies (plan.md §4.3 "Selected Work").
+// Ordered: lead project first. Chromattic is the strongest front-end craft showcase.
+// NOTE: `image` is a placeholder for most entries — swap for fresh screenshots /
+// short screen-recordings when ready (docs/next-steps.md assets checklist).
+const caseStudies = [
+	{
+		id: "chromattic",
+		name: "Chromattic",
+		role: "Color palette generator",
+		blurb:
+			"AI-powered five-color palette tool — harmony generation, on-device image extraction, live WCAG contrast checks, and one-click export to CSS / Tailwind / JSON.",
+		tags: ["Next.js", "AI", "Color Theory"],
+		link: "https://chromattic.app",
+		image: "/images/port3.PNG", // poster frame — swap for a real Chromattic still later
+		video: "/videos/chromattic-showcase.mp4",
+		featured: true,
+		span: "lg:col-span-8",
+	},
+	{
+		id: "mints",
+		name: "Mints on the House",
+		role: "Band site",
+		blurb:
+			"Band site with a WebGL hero and animated setlist. Built the front-end in React + Three.js.",
+		tags: ["React", "Three.js", "GSAP"],
+		link: "https://mintsonthehouse.com/",
+		image: "/images/port1.png",
+		featured: false,
+		span: "lg:col-span-4",
+	},
+	{
+		id: "pangea",
+		name: "Pangea",
+		role: "Front-end site",
+		blurb:
+			"Marketing site built to communicate the brand and convert visitors into clients.",
+		tags: ["Front-end", "Responsive"],
+		link: "https://pangea.com.ve/",
+		image: "/images/port2.png",
+		featured: false,
+		span: "lg:col-span-4",
+	},
+	{
+		id: "soluciones-fino",
+		name: "Soluciones Fino",
+		role: "Front-end site",
+		blurb:
+			"Business site with a clean, fast, mobile-first front-end and a clear service funnel.",
+		tags: ["Front-end", "Mobile-first"],
+		link: "https://solucionesfino.com/",
+		image: "/images/port4.png",
+		featured: false,
+		span: "lg:col-span-8",
+	},
+];
+
 export {
  navLinks,
  techStacks,
  workExperience,
  socials,
  allPassions,
+ caseStudies,
 };

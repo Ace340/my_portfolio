@@ -3,7 +3,7 @@ import { ScrollTrigger, SplitText } from 'gsap/all';
 
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
-import About from './components/About.jsx';
+import SelectedWork from './components/SelectedWork.jsx';
 import Contact from './components/Contact.jsx';
 import Techstack from './components/Techstack.jsx';
 import Passions from './components/Passions.jsx';
@@ -21,7 +21,7 @@ const App = () => {
       <Navbar />
       <Hero />
       <Techstack />
-      <About />
+      <SelectedWork />
       <Passions />
       <Contact />
     </main>
