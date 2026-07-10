@@ -9,7 +9,15 @@ const DEFAULTS = {
   fov: 35,
   size: 1,
   depth: 0.3,
+  amp: 0.18, // desktop displacement strength; auto-derated on small screens
 };
+
+// Viewports at/below this width get a lighter render (lower DPR + reduced amp)
+// so the hero degrades gracefully on phones (plan.md §5 "Mobile").
+const MOBILE_MAX_WIDTH = 768;
+const isMobileViewport = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`).matches;
 
 /**
  * Build the reactive 3D-type hero scene on the given canvas.
@@ -22,19 +30,28 @@ const DEFAULTS = {
  * WebGL path only (not TSL/WebGPU). Extrusion key is `depth` (current API).
  *
  * @param {HTMLCanvasElement} canvas
- * @param {{ text?: string, fontUrl?: string, reducedMotion?: boolean }} [options]
+ * @param {{ text?: string, fontUrl?: string, amp?: number, reducedMotion?: boolean }} [options]
+ *   `amp` sets the desktop displacement strength (mobile auto-derates to ~55%).
+ *   `reducedMotion` renders a single static frame with no input/RAF wiring.
  * @returns {{ dispose: () => void, uniforms: Record<string, THREE.IUniform>, setPointer: (x: number, y: number) => void, setScroll: (v: number) => void }}
  *   `dispose` tears down RAF + listeners + GPU resources. `setPointer`/`setScroll`
  *   feed the eased interaction targets. `uniforms` is exposed for direct inspection/debug.
+ *   On small screens or under sustained <30fps the renderer caps DPR and steps
+ *   `uAmp` down (one-way) so the scene degrades gracefully.
  */
 export function createHeroScene(canvas, options = {}) {
   const config = { ...DEFAULTS, ...options };
+
+  // Lighter config on small screens: roughly halve the displacement so low-end
+  // GPUs do less fragment work while the bulge stays readable.
+  const isMobile = isMobileViewport();
+  const baseAmp = config.reducedMotion ? 0 : (isMobile ? config.amp * 0.55 : config.amp);
 
   const uniforms = {
     uTime: { value: 0 },
     uMouse: { value: new THREE.Vector2(0, 0) },
     uScroll: { value: 0 },
-    uAmp: { value: config.reducedMotion ? 0 : 0.18 },
+    uAmp: { value: baseAmp },
     uFreq: { value: 1.4 },
   };
 
@@ -49,7 +66,8 @@ export function createHeroScene(canvas, options = {}) {
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   // Cap DPR — three.js manual discourages raw devicePixelRatio on HD-DPI displays.
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // Mobile gets a tighter cap (1.5 vs 2) to keep fill-rate cost down.
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
 
   const material = new THREE.ShaderMaterial({
     uniforms,
@@ -101,6 +119,18 @@ export function createHeroScene(canvas, options = {}) {
   let raf = 0;
   const clock = new THREE.Clock();
 
+  // Adaptive frame-rate guard — graceful degradation (plan.md §5 "Mobile").
+  // If the smoothed frame time stays above the 30fps threshold for ~1s, step
+  // uAmp down toward a floor. One-way (never climbs back) to avoid oscillation,
+  // and measured with performance.now() so it doesn't fight the three.js Clock.
+  const FRAME_TIME_30FPS = 1000 / 30;
+  const SUSTAINED_SLOW_MS = 1000;
+  const AMP_FLOOR = 0.05;
+  const AMP_DEGRADE = 0.85;
+  let lastFrameMs = 0;
+  let frameTimeEma = 0;
+  let slowAccumMs = 0;
+
   /** Size the drawing buffer to the canvas and re-frame the camera to fit the text. */
   const frame = () => {
     const w = canvas.clientWidth || window.innerWidth;
@@ -125,6 +155,25 @@ export function createHeroScene(canvas, options = {}) {
   const tick = () => {
     if (disposed) return;
     uniforms.uTime.value = clock.getElapsedTime();
+
+    // Adaptive guard: track smoothed frame time; degrade amp if the device
+    // can't hold 30fps for a sustained window.
+    const nowMs = performance.now();
+    if (lastFrameMs) {
+      const dt = nowMs - lastFrameMs;
+      frameTimeEma = frameTimeEma ? frameTimeEma * 0.9 + dt * 0.1 : dt;
+      if (frameTimeEma > FRAME_TIME_30FPS) {
+        slowAccumMs += dt;
+        if (slowAccumMs >= SUSTAINED_SLOW_MS && uniforms.uAmp.value > AMP_FLOOR) {
+          uniforms.uAmp.value = Math.max(AMP_FLOOR, uniforms.uAmp.value * AMP_DEGRADE);
+          slowAccumMs = 0; // reset so we don't re-step every frame
+        }
+      } else {
+        slowAccumMs = 0;
+      }
+    }
+    lastFrameMs = nowMs;
+
     // ease input-driven uniforms toward their targets for an inertial feel
     uniforms.uMouse.value.lerp(target.mouse, EASE);
     uniforms.uScroll.value = THREE.MathUtils.lerp(uniforms.uScroll.value, target.scroll, EASE);

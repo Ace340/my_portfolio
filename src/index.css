@@ -24,6 +24,30 @@ body {
     overflow-x: hidden;
 }
 
+/* Lenis smooth-scroll — when active it adds `.lenis` classes to <html>, so we
+   take over scroll behavior (the native `scroll-behavior: smooth` above is
+   overridden to `auto` to avoid fighting Lenis). See `motion/useSmoothScroll.js`. */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+    pointer-events: none;
+}
+
 @utility flex-center {
     @apply flex justify-center items-center;
 }
@@ -240,40 +264,6 @@ body {
 
             img {
                 @apply object-cover w-full h-full;
-            }
-        }
-    }
-
-    #virtual-reality {
-        @apply flex-center flex-col min-h-dvh p-5 mt-20 relative radial-gradient;
-
-        h2 {
-            @apply relative md:text-[20vw] text-8xl text-nowrap leading-none font-modern-negra text-center text-[#505050] mb-8;
-        }
-
-        .content {
-            @apply flex md:flex-row flex-col justify-between md:mb-16 md:mt-0 mt-40 gap-10;
-        }
-
-        .cocktail-img {
-            @apply md:w-[60vw] w-full h-[50vh] md:h-[70vh] rounded-4xl overflow-hidden absolute top-0 md:top-1/2 md:-translate-y-1/2 left-1/2 -translate-x-1/2;
-        }
-
-        .masked-container {
-            h2 {
-                @apply text-4xl md:text-5xl font-modern-negra text-center mb-10 text-white mt-32;
-            }
-
-            div {
-                @apply opacity-0 md:px-0 px-5 space-y-5 absolute md:bottom-5 bottom-52 left-1/2 -translate-x-1/2;
-
-                h3 {
-                    @apply md:text-5xl text-2xl text-center font-serif md:w-full w-80 text-white;
-                }
-
-                p {
-                    @apply text-lg text-center;
-                }
             }
         }
     }

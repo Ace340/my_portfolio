@@ -22,9 +22,9 @@ A visitor (recruiter) lands and, within seconds:
 
 ## 3. Scope
 
-**In:** new reactive-3D-type hero, repositioned copy, restructured section order, case-study project reveals, scroll motion spine, two passion sections (Level Design, Film/Photo), XR de-brand.
+**In:** new reactive-3D-type hero, repositioned copy, restructured section order, case-study project reveals, scroll motion spine, two passion sections (Level Design, Film/Photo) plus a small Music/Mints corner, XR de-brand.
 
-**Out (this phase):** a 4th passion corner for Music (TBD), blog/CMS, i18n, backend.
+**Out (this phase):** blog/CMS, i18n, backend.
 
 ## 4. Information architecture (Funnel)
 
@@ -34,7 +34,8 @@ A visitor (recruiter) lands and, within seconds:
 4. **Tech Stack** — front-end-focused (Unity stays *under gamedev*; XR rows dropped)
 5. **Beyond the code → Level Design** — flythrough video + blueprint still + intention caption
 6. **Beyond the code → Film & Photography** — curated selects / La Playa Vision
-7. **Contact** — sharpened CTA
+7. **Beyond the code → Music (Mints on the House)** — small tertiary corner (link + one line), kept clearly subordinate so the Funnel stays intact
+8. **Contact** — sharpened CTA
 
 ## 5. Interaction design
 
@@ -61,11 +62,11 @@ A visitor (recruiter) lands and, within seconds:
 - [ ] Projects: pick the 3 case studies + 1–2 line copy + fresh screenshots/recordings each
 - [ ] Level Design: pick the level + host the flythrough video + 1 blueprint still + 1 intention sentence
 - [ ] Film/Photo: curated selects (grid vs carousel?) + La Playa Vision embed/stills
-- [ ] Decide: Music/Mints — keep / cut / corner?
+- [x] Decide: Music/Mints — **keep** as a small tertiary corner (2026-07-10)
 - [x] Confirmed: mobile = degrade-gracefully
 
 ## 8. Open decisions
 
 - Hero text-geometry approach (`TextGeometry` vs `troika-three-text`) — confirm against **current three.js API** before coding (step 2)
-- Music/Mints placement
+- ~~Music/Mints placement~~ → resolved: small tertiary corner (2026-07-10)
 - Film/Photo presentation (grid vs carousel)

@@ -56,20 +56,6 @@ const workExperience = [
  },
 ];
 
-const featureLists = [
- "Immersive Experience",
- "Cross-Platform Development",
- "3D Content Creation",
- "Interaction Systems",
-];
-
-const goodLists = [
- "Product Visualization",
- "Training & Simulation",
- "Gaming & Education",
- "Web XR",
-];
-
 const socials = [
  {
 	name: "Instagram",
@@ -117,8 +103,6 @@ export {
  navLinks,
  techStacks,
  workExperience,
- featureLists,
- goodLists,
  socials,
  allPassions,
 };

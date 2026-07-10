@@ -6,7 +6,7 @@
 ## Identities
 
 - **Primary Identity** — *Front-end Creative Developer*. The role the site exists to get hired for; owns the hero and the dominant real estate. Three.js / WebGL / GSAP are *core* skills here, not side notes.
-- **Passion Track** — a creative discipline showcased as an *addition* to the Primary Identity, not a rival for attention. Proven tracks: *Level Design* (maps, blueprints, models, games) and *Film & Photography*. *Music (Mints on the House)*: status TBD.
+- **Passion Track** — a creative discipline showcased as an *addition* to the Primary Identity, not a rival for attention. Proven tracks: *Level Design* (maps, blueprints, models, games) and *Film & Photography*. *Music (Mints on the House)*: kept — as a small, clearly-subordinate tertiary corner (decided 2026-07-10; see `docs/plan.md` §4). Kept *small* on purpose so the Funnel stays intact.
 
 ## Structure
 

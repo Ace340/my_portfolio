@@ -2,6 +2,7 @@ import { socials } from '../../constants/index.js';
 import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/all';
 import gsap from 'gsap';
+import { EASE } from '../motion/easings.js';
 
 const Contact = () => {
   useGSAP(() => {
@@ -12,21 +13,21 @@ const Contact = () => {
         trigger: '#contact',
         start: 'top center',
       },
-      ease: 'power1.inOut',
+      ease: EASE.reveal,
     });
 
     timeline
       .from(titleSplit.words, {
-        opacity: 0, yPercent: 100, stagger: 0.02,
+        opacity: 0, yPercent: 100, stagger: 0.02, ease: EASE.title,
       })
       .from('#contact h3, #contact p', {
         opacity: 0, yPercent: 100, stagger: 0.02,
       })
       .to('#f-right-leaf', {
-        y: '-50', duration: 1, ease: 'power1.inOut',
+        y: '-50', duration: 1, ease: EASE.ui,
       })
       .to('#f-left-leaf', {
-        y: '-50', duration: 1, ease: 'power1.inOut',
+        y: '-50', duration: 1, ease: EASE.ui,
       }, '<');
   });
 
