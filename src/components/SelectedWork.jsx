@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger, SplitText } from 'gsap/all';
+import { ScrollTrigger, SplitText, Flip } from 'gsap/all';
 import { useGSAP } from '@gsap/react';
 import { caseStudies } from '../../constants/index.js';
 import { EASE } from '../motion/easings.js';
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger, SplitText, Flip);
 
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
@@ -17,13 +17,16 @@ const prefersReducedMotion = () =>
  * Motion (subordinate to the hero Signature Moment):
  *  - Reveal: each card's image wipes in via a clip-path inset, coordinated with a
  *    text fade-up — one-shot on enter, `EASE.reveal`.
- *  - Hover: 3D-tilt follows the cursor via `gsap.quickTo` (desktop / fine-pointer
+ *  - Hover tilt: 3D-tilt follows the cursor via `gsap.quickTo` (desktop / fine-pointer
  *    only), `EASE.ui`; resets on leave.
+ *  - Hover-expand: hovering a card grows it to the large span while its row partner
+ *    shrinks, animated via GSAP `Flip` so the grid reflow stays smooth (`EASE.ui`,
+ *    desktop only).
  *
- * Reduced-motion users get a static, fully-visible grid (no clip, no tilt). Mobile
- * (coarse pointer) skips the tilt but keeps the clip reveal. Lenis is already wired
- * to ScrollTrigger in `motion/useSmoothScroll.js`, so triggers read from smoothed
- * scroll.
+ * Reduced-motion users get a static, fully-visible grid (no clip, no tilt, no
+ * expand). Mobile (coarse pointer) skips the tilt + expand but keeps the clip
+ * reveal. Lenis is already wired to ScrollTrigger in `motion/useSmoothScroll.js`,
+ * so triggers read from smoothed scroll.
  */
 const SelectedWork = () => {
   const rootRef = useRef(null);
@@ -143,11 +146,68 @@ const SelectedWork = () => {
             card.addEventListener('mousemove', onMove);
             card.addEventListener('mouseleave', onLeave);
 
-            // matchMedia cleanup when the query un-matches.
-            ctx.add(() => {
+            // matchMedia cleanup when the query un-matches. ctx.add() invokes
+            // the passed function immediately and registers its RETURN value
+            // as the cleanup — so we must return the cleanup, not run it now.
+            ctx.add(() => () => {
               card.removeEventListener('mousemove', onMove);
               card.removeEventListener('mouseleave', onLeave);
             });
+          });
+
+          // 3. Hover-expand swap — desktop only. Hovering a card makes it take the
+          //    large span (lg:col-span-8) while its row partner shrinks to the small
+          //    span (lg:col-span-4), animated via GSAP Flip so the grid reflow is
+          //    smooth. Row pairs by source order: (0,1) and (2,3) -> partner = i ^ 1.
+          //    Each row always keeps one large card, so row height stays constant
+          //    (no page-height shift / no ScrollTrigger drift). Leaving the grid
+          //    restores every card to its default span.
+          const grid = rootRef.current.querySelector('.case-grid');
+          const LARGE = 'lg:col-span-8';
+          const SMALL = 'lg:col-span-4';
+          const SPAN_RE = /lg:col-span-\d+/;
+          const readSpan = (el) => (el.className.match(SPAN_RE) || [])[0] || '';
+          const writeSpan = (el, span) => {
+            el.classList.remove('lg:col-span-4', 'lg:col-span-8');
+            if (span) el.classList.add(span);
+          };
+          const defaultSpans = new Map(cards.map((c) => [c, readSpan(c)]));
+
+          // Composable FLIP runner: capture state, mutate the DOM, then animate the
+          // reflow. No `absolute` (all cards going absolute would collapse the grid).
+          const flipTo = (apply) => {
+            const state = Flip.getState(cards);
+            apply();
+            Flip.from(state, { duration: 0.6, ease: EASE.ui });
+          };
+
+          const enterHandlers = cards.map((card) => {
+            const i = cards.indexOf(card);
+            const partner = cards[i ^ 1];
+            return () =>
+              flipTo(() => {
+                cards.forEach((c) => writeSpan(c, defaultSpans.get(c)));
+                writeSpan(card, LARGE);
+                if (partner) writeSpan(partner, SMALL);
+              });
+          });
+          const reset = () =>
+            flipTo(() =>
+              cards.forEach((c) => writeSpan(c, defaultSpans.get(c))),
+            );
+
+          cards.forEach((card, i) =>
+            card.addEventListener('mouseenter', enterHandlers[i]),
+          );
+          grid.addEventListener('mouseleave', reset);
+
+          ctx.add(() => () => {
+            cards.forEach((card, i) =>
+              card.removeEventListener('mouseenter', enterHandlers[i]),
+            );
+            grid.removeEventListener('mouseleave', reset);
+            // Don't leave the grid in a swapped state if the query un-matches.
+            cards.forEach((c) => writeSpan(c, defaultSpans.get(c)));
           });
         },
       );
