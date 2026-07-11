@@ -12,12 +12,13 @@
 - **Mobile perf polish — Step 4** (2026-07-10): hero derates `uAmp` (×0.55) + DPR cap (1.5) on small screens, plus a one-way adaptive frame-rate guard that steps `uAmp` down under sustained <30fps. `src/components/hero/createHeroScene.js`.
 - **Music/Mints decided** (2026-07-10): kept as a small tertiary corner (plan.md §4.7, CONTEXT.md). Assets deferred.
 - **Motion spine — Step 5** (2026-07-10): added `lenis` smooth-scroll synced to GSAP ScrollTrigger via a shared ticker; unified all section easings into a shared `EASE` vocabulary (`reveal` / `title` / `ui`) in `src/motion/`. Reduced-motion falls back to native scroll. `anchors: true` intercepts nav links.
+- **Selected Work — Step 6** (2026-07-10): new `SelectedWork.jsx` replacing the old `About.jsx` image grid. Four front-end case studies (Chromattic lead/featured, Mints on the House, Pangea, Soluciones Fino) with clip-path inset scroll-reveals (`EASE.reveal`) + 3D-tilt cursor hover via `gsap.quickTo` (`EASE.ui`, desktop/fine-pointer only). `gsap.matchMedia()` gates reduced-motion (static grid) + touch (no tilt). `caseStudies` array added to `constants/index.js`. Chromattic card plays a looping muted `<video>` (`.mov`→`.mp4`, 3.4 MB→632 KB, H.264/faststart/30fps); reduced-motion users get the static poster. `About.jsx` retired. Kept `id="projects"` anchor so nav + Hero CTA still resolve.
 
 ## ▶️ Resume here — next slices (priority order)
 
-1. **Step 6 — Selected Work (case-study reveals):** clip-path / image-mask transitions + 3D-tilt hover. *Blocked on assets.*
-2. **Step 7 — Passion sections:** Level Design (video) + Film & Photography + the small Music/Mints corner. *Blocked on assets.*
-3. **Step 8 — Polish:** custom cursor, a11y pass, perf, code-split three.js (bundle is ~852 kB; lenis added ~20 kB).
+1. **Step 7 — Passion sections:** Level Design (video) + Film & Photography + the small Music/Mints corner. *Blocked on assets.*
+2. **Step 8 — Polish:** custom cursor, a11y pass, perf, code-split three.js (bundle is ~854 kB; lenis added ~20 kB).
+3. **Step 6 polish (non-blocking):** real case-study copy + fresh screenshots (see assets checklist). Build is done; only content remains.
 
 ## 🧩 Open decisions (need owner)
 
@@ -28,9 +29,12 @@
 ## 📦 Assets checklist (blocks steps 6 & 7 — gather when back)
 
 **Selected Work**
-- [ ] Choose the 3 case-study projects (candidates: Mints-on-the-House site, Pangea, Soluciones Fino)
-- [ ] 1–2 line case-study copy per project (role / what you built / the win)
-- [ ] Fresh screenshots or short screen-recordings per project
+- [x] Choose the case-study projects — **locked at 4**: Chromattic (lead/featured), Mints on the House, Pangea, Soluciones Fino.
+- [x] Chromattic showcase video — `/videos/chromattic-showcase.mp4` (converted from `.mov`, 632 KB). Original `.mov` removed once optimized.
+- [x] Mints showcase video — `/videos/moth-showcase.mp4` (converted from `.mov`, 929 KB). Original `.mov` removed once optimized.
+- [ ] 1–2 line case-study copy per project (role / what you built / the win) — placeholder blurbs currently in `constants/index.js` `caseStudies`.
+- [ ] Fresh screenshots for Mints / Pangea / Soluciones Fino (currently `port1.png` / `port2.png` / `port4.png`).
+- [ ] Chromattic poster still — `port3.PNG` is a stand-in; capture a real frame when convenient.
 
 **Level Design**
 - [ ] Pick the level/game to feature

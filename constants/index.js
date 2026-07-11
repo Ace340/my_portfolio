@@ -125,7 +125,8 @@ const caseStudies = [
 			"Band site with a WebGL hero and animated setlist. Built the front-end in React + Three.js.",
 		tags: ["React", "Three.js", "GSAP"],
 		link: "https://mintsonthehouse.com/",
-		image: "/images/port1.png",
+		image: "/images/port1.png", // poster frame
+		video: "/videos/moth-showcase.mp4",
 		featured: false,
 		span: "lg:col-span-4",
 	},
