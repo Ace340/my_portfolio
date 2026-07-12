@@ -85,7 +85,10 @@ html.lenis body {
 
 @layer components {
     main {
-        @apply w-full overflow-x-hidden;
+        /* Establishes a stacking context ABOVE the site-wide Live Proof canvas
+           (fixed, z-0). All section content paints above the field; transparent
+           sections show it; the hero's bg-black occludes it. ADR-0003. */
+        @apply relative z-10 w-full overflow-x-hidden;
     }
 
     nav {

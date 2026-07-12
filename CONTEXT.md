@@ -15,6 +15,7 @@
 ## Interaction
 
 - **Signature Moment** — the single high-impact interaction that *proves* the Primary Identity. For this project: a **reactive Three.js hero built from 3D type** (the owner's name "JUAN" extruded in 3D, distorted by cursor + scroll) — *identity-first*. The one thing a visitor must remember; gets the largest share of creative effort. All other motion (scroll-story, case-study reveals) is subordinate to it.
+- **Live Proof** — a running, in-page artifact that demonstrates a craft skill (e.g. a hand-written shader), as opposed to case-study evidence of *shipped* work. Subordinate to the Signature Moment by default: the hero is *both* the Signature Moment and a Live Proof; any further Live Proof is kept deliberately recessive so the Funnel stays intact. May recur as a shared recessive background across sections (not a one-off), so long as it never rivals the hero. (Added 2026-07-12; name provisional — see `docs/plan.md` §5C.)
 
 ## Disciplines (kept distinct on purpose)
 

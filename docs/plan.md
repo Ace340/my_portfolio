@@ -29,7 +29,7 @@ A visitor (recruiter) lands and, within seconds:
 ## 4. Information architecture (Funnel)
 
 1. **Hero** — reactive 3D "JUAN" + role line *"Front-end Creative Developer"* + one CTA
-2. **About** — short positioning (replaces XR-flavored intro)
+2. **About** — short positioning (replaces XR-flavored intro), set against a *subordinate Live Proof* background — a responsive-ambient shader that's quiet at rest and reveals its craft on cursor/scroll attention, then settles. *(Not yet rendered in `App.jsx` — to be built.)*
 3. **Selected Work** — 3 case-study reveals: Mints-on-the-House site, Pangea, Soluciones Fino
 4. **Tech Stack** — front-end-focused (Unity stays *under gamedev*; XR rows dropped)
 5. **Beyond the code → Level Design** — flythrough video + blueprint still + intention caption
@@ -42,6 +42,7 @@ A visitor (recruiter) lands and, within seconds:
 - **Signature Moment (A):** reactive Three.js hero — 3D type "JUAN", cursor parallax + scroll-driven vertex distortion, then pin. Gets the largest share of creative effort.
 - **Motion spine (B):** smooth-scroll (Lenis) + unified scroll easings; elevate the existing pin/scrub into one coherent motion language.
 - **Project treatment (D):** clip-path / image-mask case-study reveals + 3D-tilt hover.
+- **Live Proof (C):** a responsive-ambient fragment shader. Complementary to — not redundant with — the hero: the hero proves *vertex / 3D-object* shader craft, this proves *fragment / 2D-field* shader craft. **Realized as a single site-wide ambient background** (2026-07-12, ADR-0003): one fixed full-viewport layer behind all content, driven by global cursor + scroll. It **starts after the hero** — the hero section carries an opaque backing so the field is occluded while the hero is in view, protecting the Signature Moment (CONTEXT.md). Below the hero, transparent sections show the field; sections with their own opaque/gradient backgrounds (e.g. `#contact`) become natural calm zones. The degrade story (mobile intensity derate + DPR cap, adaptive frame-rate guard, static poster for `prefers-reduced-motion`) is **part of the proof**, not a polish step — a fixed always-on background has no offscreen RAF-pause, so the guards carry the GPU cost.
 - **Mobile:** ship real WebGL, **degrade gracefully** (cap DPR, reduce effects); honor `prefers-reduced-motion`.
 
 ## 6. Build sequence (vertical slices, riskiest first)
@@ -59,6 +60,7 @@ A visitor (recruiter) lands and, within seconds:
 
 - [ ] Hero: final hero text + a font file for 3D extrusion
 - [ ] Shader: sourced, **understood**, **licensed/attributed** (or custom) — a vertex-displacement / noise-distortion material
+- [ ] About Live Proof shader — fragment/2D-field GLSL, responsive-ambient (plan §5C); **policy: rewrite-from-scratch** (ADR-0002). Author of the Shadertoy reference contacted in parallel as courtesy.
 - [ ] Projects: pick the 3 case studies + 1–2 line copy + fresh screenshots/recordings each
 - [ ] Level Design: pick the level + host the flythrough video + 1 blueprint still + 1 intention sentence
 - [ ] Film/Photo: curated selects (grid vs carousel?) + La Playa Vision embed/stills
@@ -70,3 +72,4 @@ A visitor (recruiter) lands and, within seconds:
 - Hero text-geometry approach (`TextGeometry` vs `troika-three-text`) — confirm against **current three.js API** before coding (step 2)
 - ~~Music/Mints placement~~ → resolved: small tertiary corner (2026-07-10)
 - Film/Photo presentation (grid vs carousel)
+- ~~**About Live Proof shader — sourcing policy.**~~ → resolved 2026-07-12: **rewrite-from-scratch** (ADR-0002). Author contacted in parallel.

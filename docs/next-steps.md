@@ -14,11 +14,14 @@
 - **Motion spine — Step 5** (2026-07-10): added `lenis` smooth-scroll synced to GSAP ScrollTrigger via a shared ticker; unified all section easings into a shared `EASE` vocabulary (`reveal` / `title` / `ui`) in `src/motion/`. Reduced-motion falls back to native scroll. `anchors: true` intercepts nav links.
 - **Selected Work — Step 6** (2026-07-10): new `SelectedWork.jsx` replacing the old `About.jsx` image grid. Four front-end case studies (Chromattic lead/featured, Mints on the House, Pangea, Soluciones Fino) with clip-path inset scroll-reveals (`EASE.reveal`) + 3D-tilt cursor hover via `gsap.quickTo` (`EASE.ui`, desktop/fine-pointer only). `gsap.matchMedia()` gates reduced-motion (static grid) + touch (no tilt). `caseStudies` array added to `constants/index.js`. Chromattic card plays a looping muted `<video>` (`.mov`→`.mp4`, 3.4 MB→632 KB, H.264/faststart/30fps); reduced-motion users get the static poster. `About.jsx` retired. Kept `id="projects"` anchor so nav + Hero CTA still resolve.
 
+- **Grilling — About + Live Proof design (2026-07-12):** resolved a second shader as a **Live Proof** (new `CONTEXT.md` term) — a subordinate, responsive-ambient fragment shader behind the About copy, complementing the hero's vertex craft. Design = hybrid (quiet at rest → reveals on cursor/scroll attention → settles). **ADR-0002** locks sourcing: rewrite-from-scratch (Shadertoy reference is inspiration-only; author contacted in parallel). `plan.md` §4.2 / §5C / §7 / §8 updated.
+
 ## ▶️ Resume here — next slices (priority order)
 
-1. **Step 7 — Passion sections:** Level Design (video) + Film & Photography + the small Music/Mints corner. *Blocked on assets.*
-2. **Step 8 — Polish:** custom cursor, a11y pass, perf, code-split three.js (bundle is ~854 kB; lenis added ~20 kB).
-3. **Step 6 polish (non-blocking):** real case-study copy + fresh screenshots (see assets checklist). Build is done; only content remains.
+1. **Step 6.5 — Live Proof shader:** ✅ built (2026-07-12). Original fragment shader (ADR-0002), evolved into a **single site-wide fixed background** (`<LiveProof>` in `App.jsx`, behind `<main>`) — starts after the hero (hero has `bg-black` to occlude it, protecting the Signature Moment). Brightness via `intensity` prop (0.8). ADR-0003. Design in `plan.md` §5C. *Per-section placement tried + reverted (read choppy).*
+2. **Step 7 — Passion sections:** Level Design (video) + Film & Photography + the small Music/Mints corner. *Blocked on assets.*
+3. **Step 8 — Polish:** custom cursor, a11y pass, perf, code-split three.js (bundle is ~854 kB; lenis added ~20 kB).
+4. **Step 6 polish (non-blocking):** real case-study copy + fresh screenshots (see assets checklist). Build is done; only content remains.
 
 ## 🧩 Open decisions (need owner)
 

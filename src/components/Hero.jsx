@@ -68,7 +68,7 @@ const Hero = () => {
   );
 
   return (
-    <section id="hero" ref={rootRef} className="overflow-hidden">
+    <section id="hero" ref={rootRef} className="overflow-hidden bg-black">
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
       {/* Heading for assistive tech — the 3D text is invisible to screen readers. */}

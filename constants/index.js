@@ -8,7 +8,7 @@ const navLinks = [
 	title: "Projects",
  },
  {
-	id: "menu",
+	id: "about",
 	title: "About",
  },
  {
@@ -156,6 +156,16 @@ const caseStudies = [
 	},
 ];
 
+// PLACEHOLDER positioning copy for the About section (plan.md §4.2, ADR-0001).
+// Frames the owner as a Front-end Creative Developer — real-time 3D (Three.js /
+// WebGL) and motion (GSAP) as core front-end craft, not a side discipline; XR is
+// de-branded and intentionally absent. Replace the wording before launch.
+const aboutCopy = {
+	eyebrow: "About",
+	title: "Front-end Creative Developer",
+	body: "I build fast, expressive web interfaces where real-time 3D (Three.js / WebGL) and motion (GSAP) are part of the front-end craft — not a separate discipline. I care about performance, accessibility, and the feel of every interaction.",
+};
+
 export {
  navLinks,
  techStacks,
@@ -163,4 +173,5 @@ export {
  socials,
  allPassions,
  caseStudies,
+ aboutCopy,
 };
