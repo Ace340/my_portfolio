@@ -303,6 +303,127 @@ html.lenis body {
         }
     }
 
+    #gamedev {
+        @apply py-28 container mx-auto;
+
+        .content {
+            @apply grid grid-cols-1 lg:grid-cols-12 gap-5 2xl:px-0 px-5;
+
+            h2 {
+                @apply text-4xl md:text-5xl font-modern-negra max-w-lg;
+            }
+
+            .sub-content {
+                @apply md:col-span-4 space-y-5 mt-6 lg:mt-10 flex flex-col justify-between;
+
+                p {
+                    @apply text-lg;
+                }
+            }
+        }
+
+        .badge {
+            @apply inline-block rounded-full bg-white text-black px-4 py-2 text-sm font-medium mb-8;
+        }
+
+        .reel {
+            @apply relative block rounded-3xl overflow-hidden mt-16 aspect-video;
+
+            .reel-media {
+                @apply object-cover w-full h-full block transition-transform duration-500 ease-out;
+            }
+
+            .reel-play {
+                @apply absolute inset-0 flex-center text-white transition-colors duration-300;
+
+                svg {
+                    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.6));
+                }
+            }
+
+            .reel-caption {
+                @apply absolute bottom-0 inset-x-0 p-6 md:p-8 flex flex-col gap-1;
+                background: linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.85) 0%,
+                    rgba(0, 0, 0, 0.35) 50%,
+                    transparent 100%
+                );
+            }
+
+            .reel-title {
+                @apply font-modern-negra text-2xl md:text-3xl text-yellow;
+            }
+
+            .reel-blurb {
+                @apply text-sm md:text-base text-white/80 max-w-xl;
+            }
+
+            &:hover .reel-media {
+                @apply scale-105;
+            }
+
+            &:hover .reel-play {
+                @apply text-yellow;
+            }
+        }
+
+        .game-grid {
+            @apply grid grid-cols-1 md:grid-cols-3 gap-5 mt-10 2xl:px-0 px-5;
+        }
+
+        .game-card {
+            @apply relative rounded-3xl overflow-hidden block h-72 md:h-80;
+        }
+
+        .game-media-wrap {
+            @apply relative w-full h-full;
+            will-change: transform;
+        }
+
+        .game-media {
+            @apply object-cover w-full h-full transition-transform duration-500 ease-out block;
+        }
+
+        .game-card:hover .game-media {
+            @apply scale-105;
+        }
+
+        .game-overlay {
+            @apply absolute inset-0 flex flex-col justify-end p-6;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.85) 0%,
+                rgba(0, 0, 0, 0.35) 50%,
+                transparent 100%
+            );
+        }
+
+        .game-meta {
+            @apply max-w-sm;
+        }
+
+        .game-role {
+            @apply text-yellow text-xs uppercase tracking-[0.2em] mb-2;
+        }
+
+        .game-name {
+            @apply font-modern-negra text-2xl md:text-3xl mb-2;
+        }
+
+        .game-blurb {
+            @apply text-sm text-white/80 mb-4;
+        }
+
+        .game-tags {
+            @apply flex flex-wrap gap-2;
+
+            li {
+                @apply text-xs rounded-full border border-white/20 px-3 py-1 text-white/70;
+            }
+        }
+    }
+
     #menu {
         @apply relative w-full md:mt-40 mt-0 2xl:px-0 px-5 py-20 radial-gradient;
 

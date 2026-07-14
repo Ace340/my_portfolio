@@ -5,9 +5,10 @@ import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
 import SelectedWork from './components/SelectedWork.jsx';
+import GameDev from './components/GameDev.jsx';
 import Contact from './components/Contact.jsx';
-import Techstack from './components/Techstack.jsx';
-import Passions from './components/Passions.jsx';
+// import Techstack from './components/Techstack.jsx'; // commented out — rebuild front-end-focused (plan.md §4.4)
+// import Passions from './components/Passions.jsx'; // commented out — legacy carousel; rebuild as Film/Photo + Music (plan.md §4.6/§4.7)
 import LiveProof from './components/LiveProof.jsx';
 import { useSmoothScroll } from './motion/useSmoothScroll.js';
 
@@ -27,9 +28,10 @@ const App = () => {
         <Navbar />
         <Hero />
         <About />
-        <Techstack />
+        {/* <Techstack /> — commented out; rebuild front-end-focused (plan.md §4.4) */}
         <SelectedWork />
-        <Passions />
+        <GameDev />
+        {/* <Passions /> — commented out; legacy carousel to be rebuilt as Film/Photo + Music sections (plan.md §4.6/§4.7) */}
         <Contact />
       </main>
     </>

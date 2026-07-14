@@ -1,15 +1,15 @@
 const navLinks = [
  {
-	id: "techstack",
-	title: "Tech Stack",
+	id: "about",
+	title: "About",
  },
  {
 	id: "projects",
 	title: "Projects",
  },
  {
-	id: "about",
-	title: "About",
+	id: "gamedev",
+	title: "Game Dev",
  },
  {
 	id: "contact",
@@ -166,7 +166,55 @@ const aboutCopy = {
 	body: "I build fast, expressive web interfaces where real-time 3D (Three.js / WebGL) and motion (GSAP) are part of the front-end craft — not a separate discipline. I care about performance, accessibility, and the feel of every interaction.",
 };
 
+// Game Dev & Level Design — passion track (plan.md §4.5). Taco Monkey Studio
+// game-jam work + a level-design reel. Clearly subordinate to the hero / front-end
+// identity (Funnel, CONTEXT.md). Genre-first framing keeps the XR de-brand intact
+// (ADR-0001) while honestly showing the work. No "AI assisted" disclosure is
+// surfaced on the site (owner's decision, 2026-07-14).
+const gameReel = {
+	title: "Level Design Portfolio",
+	caption:
+		"A reel of designed levels — layout, flow, pacing, and sightlines across several scenes.",
+	link: "https://youtu.be/IH1Pe1vJEgY",
+	poster: "/images/level-design-reel.jpg",
+};
+
+const gameProjects = [
+	{
+		id: "tiny-rebels",
+		name: "Tiny Rebels",
+		role: "Shooter · GameDev.tv Game Jam 2025",
+		blurb:
+			"Our first game — a Unity shooter built for the GameDev.tv Game Jam 2025. Hit the targets, grab the coins, and finish the training course.",
+		tags: ["Unity", "Game Jam", "HTML5"],
+		image: "/images/tinyrebels.png",
+		link: "https://tacomonkeystudio.itch.io/tiny-rebels-v11",
+	},
+	{
+		id: "ghost-attack",
+		name: "Ghost Attack",
+		role: "Shooter · Portfolio piece",
+		blurb:
+			"A shooter demo built as an early portfolio piece, exploring real-time target interaction in immersive space.",
+		tags: ["Shooter", "VR"],
+		image: "/images/ghost-attack.png",
+		link: "https://tacomonkeystudio.itch.io/ghost-attack",
+	},
+	{
+		id: "she-wants-answers",
+		name: "She Wants Answers",
+		role: "Survival-horror puzzle · Halloween Jam 2025",
+		blurb:
+			"Outrun your undead ex to the church while answering her twisted quiz questions — one wrong answer might be your last.",
+		tags: ["Survival Horror", "Puzzle"],
+		image: "/images/tinyrebels.png", // PLACEHOLDER — swap for /images/she-wants-answers.png when ready
+		link: "https://tacomonkeystudio.itch.io/she-wants-answers",
+	},
+];
+
 export {
+ gameReel,
+ gameProjects,
  navLinks,
  techStacks,
  workExperience,

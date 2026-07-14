@@ -1,6 +1,6 @@
 # Next Steps — Portfolio Redesign (Handoff)
 
-> Resume guide. Status snapshot through the session of 2026-07-10.
+> Resume guide. Status snapshot through 2026-07-14.
 > Branch: `hero-feature`. See [`docs/plan.md`](plan.md) for the full plan, [`../CONTEXT.md`](../CONTEXT.md) for vocabulary, and [`docs/adr/0001-de-emphasize-xr-position-as-front-end-creative-developer.md`](adr/0001-de-emphasize-xr-position-as-front-end-creative-developer.md) for the XR decision.
 
 ## ✅ Done this session
@@ -15,11 +15,15 @@
 - **Selected Work — Step 6** (2026-07-10): new `SelectedWork.jsx` replacing the old `About.jsx` image grid. Four front-end case studies (Chromattic lead/featured, Mints on the House, Pangea, Soluciones Fino) with clip-path inset scroll-reveals (`EASE.reveal`) + 3D-tilt cursor hover via `gsap.quickTo` (`EASE.ui`, desktop/fine-pointer only). `gsap.matchMedia()` gates reduced-motion (static grid) + touch (no tilt). `caseStudies` array added to `constants/index.js`. Chromattic card plays a looping muted `<video>` (`.mov`→`.mp4`, 3.4 MB→632 KB, H.264/faststart/30fps); reduced-motion users get the static poster. `About.jsx` retired. Kept `id="projects"` anchor so nav + Hero CTA still resolve.
 
 - **Grilling — About + Live Proof design (2026-07-12):** resolved a second shader as a **Live Proof** (new `CONTEXT.md` term) — a subordinate, responsive-ambient fragment shader behind the About copy, complementing the hero's vertex craft. Design = hybrid (quiet at rest → reveals on cursor/scroll attention → settles). **ADR-0002** locks sourcing: rewrite-from-scratch (Shadertoy reference is inspiration-only; author contacted in parallel). `plan.md` §4.2 / §5C / §7 / §8 updated.
+- **Techstack commented out (2026-07-14):** `<Techstack />` + its import commented in `App.jsx`. To be rebuilt front-end-focused (drop the Unity row; XR rows already gone per ADR-0001). `plan.md` §4.4.
+- **Game Dev & Level Design section (2026-07-14):** new `src/components/GameDev.jsx` — "Beyond the Code" passion track: a level-design reel (YouTube thumbnail linking out) + a 3-card gallery of Taco Monkey Studio game-jam games linking to itch.io (Tiny Rebels, Ghost Attack, She Wants Answers). Genre-first framing keeps the XR de-brand intact. Motion mirrors `SelectedWork` (word-split title, clip-path reveals, desktop 3D-tilt). Data in `constants/index.js` (`gameReel`, `gameProjects`); CSS `#gamedev` block in `src/index.css`. Reel poster at `/public/images/level-design-reel.jpg`.
+- **Passions legacy carousel retired (2026-07-14):** `<Passions />` + import commented in `App.jsx` — it mixed all three passions; gamedev now lives in `GameDev.jsx`. Film/Photo + Music return as their own sections (Step 7). `plan.md` §4.6/§4.7.
+- **Reel = linked thumbnail, not inline iframe (2026-07-14):** Lenis disables iframe `pointer-events` during smooth scroll (`src/index.css` `.lenis-smooth iframe`), so a YouTube embed would be unclickable. The reel is a thumbnail + play button → YouTube. An inline embed would need a lite/facade pattern if ever required.
 
 ## ▶️ Resume here — next slices (priority order)
 
 1. **Step 6.5 — Live Proof shader:** ✅ built (2026-07-12). Original fragment shader (ADR-0002), evolved into a **single site-wide fixed background** (`<LiveProof>` in `App.jsx`, behind `<main>`) — starts after the hero (hero has `bg-black` to occlude it, protecting the Signature Moment). Brightness via `intensity` prop (0.8). ADR-0003. Design in `plan.md` §5C. *Per-section placement tried + reverted (read choppy).*
-2. **Step 7 — Passion sections:** Level Design (video) + Film & Photography + the small Music/Mints corner. *Blocked on assets.*
+2. **Step 7 — Passion sections (in progress):** ✅ Game Dev & Level Design built (2026-07-14). Remaining: **Film & Photography** (La Playa Vision — grid vs carousel, embed vs stills) + the small **Music/Mints** tertiary corner. *Blocked on assets.*
 3. **Step 8 — Polish:** custom cursor, a11y pass, perf, code-split three.js (bundle is ~854 kB; lenis added ~20 kB).
 4. **Step 6 polish (non-blocking):** real case-study copy + fresh screenshots (see assets checklist). Build is done; only content remains.
 
@@ -28,6 +32,7 @@
 - ~~**Music / Mints on the House**~~ → resolved 2026-07-10: keep as a small tertiary corner.
 - ~~**Lenis dependency**~~ → resolved 2026-07-10: approved & installed (`lenis` v1.3.25).
 - **Anchor offset** — `anchors: true` lands sections under the fixed navbar; add a `scrollTo` offset or `scroll-padding-top` if headings get clipped (verify in the browser).
+- **Nav cleanup (2026-07-14):** the `techstack` nav link in `constants/index.js` `navLinks` is now dead (section commented out), and there's no `gamedev` nav entry. Decide: remove the dead `techstack` link + add a "Game Dev" link, or leave nav as-is.
 
 ## 📦 Assets checklist (blocks steps 6 & 7 — gather when back)
 
@@ -39,11 +44,13 @@
 - [ ] Fresh screenshots for Mints / Pangea / Soluciones Fino (currently `port1.png` / `port2.png` / `port4.png`).
 - [ ] Chromattic poster still — `port3.PNG` is a stand-in; capture a real frame when convenient.
 
-**Level Design**
-- [ ] Pick the level/game to feature
-- [ ] Flythrough/playthrough video (YouTube or hosted mp4?)
-- [ ] 1 blueprint/map still
-- [ ] 1 intention sentence ("why this level plays this way")
+**Game Dev & Level Design** ✅ section built (2026-07-14)
+- [x] Flythrough/playthrough video — YouTube reel `IH1Pe1vJEgY` ("Level Design Portfolio Juan Acevedo"); poster at `/public/images/level-design-reel.jpg`.
+- [x] itch.io game links — Tiny Rebels, Ghost Attack, She Wants Answers (Taco Monkey Studio).
+- [x] Screenshots — `tinyrebels.png`, `ghost-attack.png` in place.
+- [ ] **She Wants Answers screenshot** — currently a `tinyrebels.png` PLACEHOLDER in `constants/index.js` (`gameProjects` → `she-wants-answers` `image`). Drop a real one at `/public/images/she-wants-answers.png` and swap.
+- [ ] 1–2 line captions per game — drafted (in `constants/index.js` `gameProjects`); tweak wording anytime.
+- [ ] *(Optional)* A blueprint/map still — original plan called for one; the gallery framing replaced it. Revisit if a pure Level-Design deep-dive is wanted later.
 
 **Film & Photography**
 - [ ] Curated selects (how many? grid or carousel?)
