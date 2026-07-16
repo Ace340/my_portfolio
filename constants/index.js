@@ -207,8 +207,9 @@ const gameProjects = [
 		blurb:
 			"Outrun your undead ex to the church while answering her twisted quiz questions — one wrong answer might be your last.",
 		tags: ["Survival Horror", "Puzzle"],
-		image: "/images/tinyrebels.png", // PLACEHOLDER — swap for /images/she-wants-answers.png when ready
-		link: "https://tacomonkeystudio.itch.io/she-wants-answers",
+		image: "/images/she-wants-answers.jpg",
+		video: "/videos/she-wants-answers.mp4",
+		link: "https://sidequestvr.com/app/45028/she-wants-answers",
 	},
 ];
 

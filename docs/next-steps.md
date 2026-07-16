@@ -46,9 +46,9 @@
 
 **Game Dev & Level Design** ✅ section built (2026-07-14)
 - [x] Flythrough/playthrough video — YouTube reel `IH1Pe1vJEgY` ("Level Design Portfolio Juan Acevedo"); poster at `/public/images/level-design-reel.jpg`.
-- [x] itch.io game links — Tiny Rebels, Ghost Attack, She Wants Answers (Taco Monkey Studio).
+- [x] itch.io game links — Tiny Rebels, Ghost Attack (Taco Monkey Studio); She Wants Answers on the SideQuest VR app store (`sidequestvr.com/app/45028/...`).
 - [x] Screenshots — `tinyrebels.png`, `ghost-attack.png` in place.
-- [ ] **She Wants Answers screenshot** — currently a `tinyrebels.png` PLACEHOLDER in `constants/index.js` (`gameProjects` → `she-wants-answers` `image`). Drop a real one at `/public/images/she-wants-answers.png` and swap.
+- [x] **She Wants Answers card** — inline muted-looping showcase video (`/videos/she-wants-answers.mp4`, 2.9 MB; re-encoded from the original `.mov` at 1280×584 / 30fps, audio stripped) with a local poster (`/images/she-wants-answers.jpg`). Card links to the SideQuest VR app page. Mirrors the `SelectedWork` inline-video card pattern (autoplay skipped for reduced-motion). Original `.mov` deleted after conversion.
 - [ ] 1–2 line captions per game — drafted (in `constants/index.js` `gameProjects`); tweak wording anytime.
 - [ ] *(Optional)* A blueprint/map still — original plan called for one; the gallery framing replaced it. Revisit if a pure Level-Design deep-dive is wanted later.
 

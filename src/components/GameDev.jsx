@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger, SplitText } from 'gsap/all';
 import { useGSAP } from '@gsap/react';
@@ -15,13 +15,18 @@ const prefersReducedMotion = () =>
  * Game Dev & Level Design — passion track (plan.md §4.5).
  *
  * A clearly-secondary section: a level-design reel (YouTube thumbnail linking out)
- * plus a small gallery of Taco Monkey Studio game-jam games linking to itch.io.
- * Genre-first framing keeps the XR de-brand intact (ADR-0001) while honestly
- * showing the work.
+ * plus a small gallery of Taco Monkey Studio game-jam games linking to itch.io /
+ * SideQuest. Genre-first framing keeps the XR de-brand intact (ADR-0001) while
+ * honestly showing the work.
  *
  * The reel is a linked thumbnail, not an inline iframe, because Lenis disables
  * iframe pointer-events during smooth scroll (`src/index.css` `.lenis-smooth
  * iframe`), which would make an embedded player unclickable.
+ *
+ * Game cards with a `video` render an inline muted-looping showcase (mirrors
+ * `SelectedWork`): a native `<video>` is unaffected by the Lenis iframe rule, so
+ * it autoplays inline; reduced-motion users get the static poster (`image`). The
+ * card itself still links out to the project (`link`).
  *
  * Motion (subordinate to the hero Signature Moment):
  *  - Reveal: heading word-split (`EASE.title`) + reel / game-card clip-path inset
@@ -35,6 +40,20 @@ const prefersReducedMotion = () =>
  */
 const GameDev = () => {
   const rootRef = useRef(null);
+  const videoRefs = useRef({});
+
+  // Autoplay inline showcase videos for everyone EXCEPT reduced-motion users,
+  // who get a static poster frame (`image`). Muted + playsInline so browsers
+  // allow it. Mirrors `SelectedWork`. (Browsers block autoplay with sound.)
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    Object.values(videoRefs.current).forEach((video) => {
+      if (!video) return;
+      video.play().catch(() => {
+        /* autoplay can be rejected until interaction; the poster still shows */
+      });
+    });
+  }, []);
 
   useGSAP(
     () => {
@@ -156,17 +175,25 @@ const GameDev = () => {
         },
       );
 
-      // Images may shift layout on load → recalc trigger positions once ready.
+      // Media may shift layout on load → recalc trigger positions once ready.
       const imgs = gsap.utils.toArray('#gamedev img');
-      Promise.all(
-        imgs.map((img) =>
+      const vids = gsap.utils.toArray('#gamedev video');
+      Promise.all([
+        ...imgs.map((img) =>
           img.complete
             ? Promise.resolve()
             : new Promise((res) => {
                 img.onload = img.onerror = res;
               }),
         ),
-      ).then(() => ScrollTrigger.refresh());
+        ...vids.map((video) =>
+          video.readyState >= 1
+            ? Promise.resolve()
+            : new Promise((res) => {
+                video.onloadeddata = video.onerror = res;
+              }),
+        ),
+      ]).then(() => ScrollTrigger.refresh());
 
       return () => mm.revert();
     },
@@ -228,15 +255,31 @@ const GameDev = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="game-card"
-            aria-label={`${game.name} — ${game.role}. Open on itch.io in a new tab.`}
+            aria-label={`${game.name} — ${game.role}. Open in a new tab.`}
           >
             <div className="game-media-wrap">
-              <img
-                src={game.image}
-                alt={`${game.name} — ${game.role}`}
-                className="game-media"
-                loading="lazy"
-              />
+              {game.video ? (
+                <video
+                  ref={(el) => {
+                    videoRefs.current[game.id] = el;
+                  }}
+                  className="game-media"
+                  poster={game.image}
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src={game.video} type="video/mp4" />
+                </video>
+              ) : (
+                <img
+                  src={game.image}
+                  alt={`${game.name} — ${game.role}`}
+                  className="game-media"
+                  loading="lazy"
+                />
+              )}
               <div className="game-overlay">
                 <div className="game-meta">
                   <p className="game-role">{game.role}</p>
