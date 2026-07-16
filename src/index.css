@@ -115,6 +115,16 @@ html.lenis body {
         @apply absolute inset-0 size-full bg-[url("/images/noise.png")];
     } */
 
+    /* Masked backing wrapper for the hero (see Hero.jsx): holds the opaque
+       bg-black + the 3D canvas and fades its bottom edge to transparent so the
+       site-wide Live Proof field (fixed, z-0) bleeds through with no hard #000
+       seam. The CTA overlay is a SIBLING of this wrapper (not a child), so it is
+       not masked and stays crisp at any height. ADR-0003 / CONTEXT.md "Live Proof". */
+    .hero-backing {
+        -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%);
+        mask-image: linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%);
+    }
+
     #hero {
         @apply relative z-10 min-h-dvh w-full border border-transparent;
 

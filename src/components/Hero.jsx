@@ -68,8 +68,14 @@ const Hero = () => {
   );
 
   return (
-    <section id="hero" ref={rootRef} className="overflow-hidden bg-black">
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+    <section id="hero" ref={rootRef} className="overflow-hidden">
+      {/* Masked backing (.hero-backing in index.css): bg-black + the 3D canvas
+          fade out over the bottom 20% so the Live Proof field shows through with
+          no hard seam. The CTA below is a sibling, NOT a child of this wrapper,
+          so it isn't masked and can sit low while staying crisp. */}
+      <div className="hero-backing absolute inset-0 bg-black">
+        <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+      </div>
 
       {/* Heading for assistive tech — the 3D text is invisible to screen readers. */}
       <h1 className="sr-only">JUAN — Front-end Creative Developer</h1>
