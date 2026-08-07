@@ -157,13 +157,20 @@ const caseStudies = [
 ];
 
 // PLACEHOLDER positioning copy for the About section (plan.md §4.2, ADR-0001).
-// Frames the owner as a Front-end Creative Developer — real-time 3D (Three.js /
-// WebGL) and motion (GSAP) as core front-end craft, not a side discipline; XR is
-// de-branded and intentionally absent. Replace the wording before launch.
+// Frames the owner as a Front-end Creative Developer — real-time 3D and motion
+// as core front-end craft, not a side discipline; XR is de-branded and
+// intentionally absent. Told as a Scroll-story (CONTEXT.md): one sentence per
+// beat, revealed progressively by a vertical line. Draft copy — edit freely.
+// NOTE (Funnel seam): About names NO tools; the Tech Stack section lists tools.
 const aboutCopy = {
 	eyebrow: "About",
 	title: "Front-end Creative Developer",
-	body: "I build fast, expressive web interfaces where real-time 3D (Three.js / WebGL) and motion (GSAP) are part of the front-end craft — not a separate discipline. I care about performance, accessibility, and the feel of every interaction.",
+	beats: [
+		"I build fast, expressive web interfaces where real-time 3D and motion are part of the front-end craft — never a separate discipline.",
+		"Real-time 3D and shaders are how I think in the browser: geometry, light, and response, drawn on the GPU.",
+		"Every interaction has a feel — and motion is how I tune that feel, beat by beat.",
+		"I hold the line on performance and accessibility, so the work ships for everyone.",
+	],
 };
 
 // Game Dev & Level Design — passion track (plan.md §4.5). Taco Monkey Studio

@@ -30,9 +30,10 @@ const isMobileViewport = () =>
  * @param {{ intensity?: number, reducedMotion?: boolean }} [options]
  *   `intensity` sets the per-instance brightness/reveal strength (mobile auto-derates to ~55%).
  *   `reducedMotion` renders a single static frame with no input/RAF wiring.
- * @returns {{ dispose: () => void, uniforms: Record<string, THREE.IUniform>, setPointer: (x: number, y: number) => void, setScroll: (v: number) => void, setReveal: (v: number) => void, setActive: (v: boolean) => void }}
+ * @returns {{ dispose: () => void, uniforms: Record<string, THREE.IUniform>, setPointer: (x: number, y: number) => void, setScroll: (v: number) => void, setReveal: (v: number) => void, setIntensity: (v: number) => void, setActive: (v: boolean) => void }}
  *   `dispose` tears down RAF + listeners + GPU resources. `setPointer`/`setScroll`/
- *   `setReveal` feed the eased interaction targets. `setActive(false)` halts the
+ *   `setReveal` feed the eased interaction targets. `setIntensity` sets a runtime
+ *   brightness target (dimmed calm zones, ADR-0003 revision). `setActive(false)` halts the
  *   RAF (GPU-cost discipline when the section is offscreen — part of the "proof",
  *   plan.md §5C). On small screens or under sustained <30fps the renderer caps DPR
  *   and steps `uIntensity` down (one-way) so the field degrades gracefully.
@@ -65,6 +66,7 @@ export function createLiveProofScene(canvas, options = {}) {
     mouse: new THREE.Vector2(0, 0),
     scroll: 0,
     reveal: 0,
+    intensity: baseIntensity,
   };
 
   const scene = new THREE.Scene();
@@ -170,6 +172,10 @@ export function createLiveProofScene(canvas, options = {}) {
   let lastFrameMs = 0;
   let frameTimeEma = 0;
   let slowAccumMs = 0;
+  // Adaptive guard lowers this one-way ceiling on sustained slow frames; the
+  // eased intensity target can never climb above it. Keeps the derate compatible
+  // with a runtime-settable intensity (dimmed calm zones — ADR-0003 revision).
+  let guardCeiling = baseIntensity;
 
   /** Size the drawing buffer to the canvas (CSS controls display size). */
   const frame = () => {
@@ -183,16 +189,18 @@ export function createLiveProofScene(canvas, options = {}) {
     if (disposed || !active) return;
     uniforms.uTime.value = clock.getElapsedTime();
 
-    // Adaptive guard: track smoothed frame time; derate intensity if the device
-    // can't hold 30fps for a sustained window.
+    // Adaptive guard: track smoothed frame time; derate the intensity CEILING
+    // (one-way) if the device can't hold 30fps for a sustained window. The eased
+    // target below can never exceed this ceiling, so derate survives runtime
+    // intensity changes (dimmed calm zones — ADR-0003 revision).
     const nowMs = performance.now();
     if (lastFrameMs) {
       const dt = nowMs - lastFrameMs;
       frameTimeEma = frameTimeEma ? frameTimeEma * 0.9 + dt * 0.1 : dt;
       if (frameTimeEma > FRAME_TIME_30FPS) {
         slowAccumMs += dt;
-        if (slowAccumMs >= SUSTAINED_SLOW_MS && uniforms.uIntensity.value > INTENSITY_FLOOR) {
-          uniforms.uIntensity.value = Math.max(INTENSITY_FLOOR, uniforms.uIntensity.value * INTENSITY_DEGRADE);
+        if (slowAccumMs >= SUSTAINED_SLOW_MS && guardCeiling > INTENSITY_FLOOR) {
+          guardCeiling = Math.max(INTENSITY_FLOOR, guardCeiling * INTENSITY_DEGRADE);
           slowAccumMs = 0; // reset so we don't re-step every frame
         }
       } else {
@@ -201,7 +209,10 @@ export function createLiveProofScene(canvas, options = {}) {
     }
     lastFrameMs = nowMs;
 
-    // ease input-driven uniforms toward their targets for an inertial feel
+    // ease input-driven uniforms toward their targets for an inertial feel.
+    // Intensity eases toward the runtime target, capped by the guard ceiling.
+    const intensityTarget = Math.min(target.intensity, guardCeiling);
+    uniforms.uIntensity.value = THREE.MathUtils.lerp(uniforms.uIntensity.value, intensityTarget, EASE);
     uniforms.uMouse.value.lerp(target.mouse, EASE);
     uniforms.uScroll.value = THREE.MathUtils.lerp(uniforms.uScroll.value, target.scroll, EASE);
     uniforms.uReveal.value = THREE.MathUtils.lerp(uniforms.uReveal.value, target.reveal, EASE);
@@ -237,6 +248,16 @@ export function createLiveProofScene(canvas, options = {}) {
   };
 
   /**
+   * Runtime brightness target (dimmed calm zones — ADR-0003 revision). The RAF
+   * loop eases uIntensity toward this value, capped by the adaptive-guard
+   * ceiling. Pass the section's full intensity to restore, a lower value to dim
+   * while a calm zone is in view.
+   */
+  const setIntensity = (v) => {
+    target.intensity = v;
+  };
+
+  /**
    * Gate the RAF. setActive(false) halts rendering (GPU-cost discipline while
    * the section is offscreen); setActive(true) resumes. No-op for reduced-motion
    * (static frame, no loop to run).
@@ -266,5 +287,5 @@ export function createLiveProofScene(canvas, options = {}) {
     renderer.dispose();
   };
 
-  return { dispose, uniforms, setPointer, setScroll, setReveal, setActive };
+  return { dispose, uniforms, setPointer, setScroll, setReveal, setIntensity, setActive };
 }

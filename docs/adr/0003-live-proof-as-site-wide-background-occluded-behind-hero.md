@@ -45,3 +45,15 @@ The original occlusion used a hard `bg-black` edge, which left a visible #000 se
 Why this isn't the rejected "show through the hero" alternative: the fade is confined to the bottom transition strip, well below the 3D "JUAN" type — the Signature Moment stays on a fully opaque backing, so the field is not a second competing element across the hero. The CTA overlay is a **sibling** of `.hero-backing`, so it is not masked and stays crisp at any height.
 
 The decision still holds: the Live Proof remains one site-wide fixed background, **occluded behind the hero** — now with a soft edge rather than a hard one.
+
+## Revision (2026-07-16): per-section intensity dimming for calm zones (About)
+
+The original decision held the field at full intensity everywhere it was visible and stated **"Global cursor + global scroll progress drive the field (no per-section triggers)."** The About redesign introduces a **Scroll-story** (CONTEXT.md) — a multi-beat narrative of sentence-level beats revealed by a vertical line. For the line and the sentences to own the eye, the field behind About must quiet down. That requires a per-section adjustment, which the "no per-section triggers" rule appeared to forbid.
+
+**Relaxation:** the rule is split into two halves. *No per-section content/animation triggers* still holds — the field is one global ambient field driven by global cursor + scroll, not a per-section effect. **Per-section intensity, for dimming only, is now permitted.** A section may declare itself a *dimmed calm zone* (CONTEXT.md "Calm zone"): the field's intensity is reduced while that section is in view, then returns to full when it leaves. About is the first such dimmed calm zone.
+
+Why this isn't the rejected "global dim" alternative: lowering the field site-wide would weaken the Live Proof on every other section (Selected Work, Passions, etc.) to calm one. Per-section dimming localises the cost — the field stays at full proof-strength everywhere except where a section explicitly opts into calm.
+
+Why this isn't a second Live Proof or a per-section shader instance: dimming is a single scalar on the existing global field — no new canvas, no new shader, no per-section animation curve. The architecture (one fixed full-viewport layer, one GPU context, global drivers) is unchanged; only an intensity multiplier becomes scroll-region-aware.
+
+The decision still holds: the Live Proof remains one site-wide fixed background, occluded behind the hero — now with the field permitted to dim inside declared calm zones.

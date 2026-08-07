@@ -10,6 +10,11 @@ const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Dimmed calm zones (ADR-0003 revision): while a `[data-calm-zone]` section is
+// in view, the field eases down to this fraction of its full intensity so the
+// foreground content owns the eye. About is the first such zone (CONTEXT.md).
+const CALM_ZONE_INTENSITY_FACTOR = 0.4;
+
 /**
  * LiveProof — the site-wide ambient shader background (CONTEXT.md "Live Proof",
  * plan.md §5C, ADR-0003).
@@ -29,7 +34,13 @@ const prefersReducedMotion = () =>
  *   3. global scroll progress → setScroll (the field drifts as you traverse
  *      the page — depth without per-section triggers);
  *   4. reveal held at full (setReveal(1)) — the field is always "awake" where
- *      it is visible (i.e. below the hero).
+ *      it is visible (i.e. below the hero);
+ *   5. dimmed calm zones → setIntensity (any `[data-calm-zone]` section eases
+ *      the field down while in view, back to full on leave — ADR-0003 revision).
+ *
+ * Two kinds of calm zone now exist (CONTEXT.md "Calm zone"): *occluded* (opaque
+ * backing hides the field — the hero, `#contact`) and *dimmed* (transparent
+ * backing; intensity eased down via step 5 — e.g. About).
  *
  * Perf: a fixed background is always on-screen, so there is no offscreen RAF-
  * pause — the factory's mobile intensity derate, DPR cap, adaptive frame-rate
@@ -88,6 +99,36 @@ const LiveProof = ({ intensity = 0.8 }) => {
       return () => st.kill();
     },
     { dependencies: [] },
+  );
+
+  // 4. dimmed calm zones (ADR-0003 revision): any section marked `data-calm-zone`
+  // eases the field's intensity down while it overlaps the viewport and back to
+  // full on leave. Sections DECLARE intent via the attribute; the dimming lives
+  // here, where the field lives. No per-section shader/content triggers — only
+  // an intensity scalar on the one global field.
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      const zones = document.querySelectorAll('[data-calm-zone]');
+      if (!zones.length) return;
+      const full = intensity;
+      const dimmed = intensity * CALM_ZONE_INTENSITY_FACTOR;
+      const triggers = Array.from(zones).map((zone) =>
+        ScrollTrigger.create({
+          trigger: zone,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          onToggle: (self) => apiRef.current?.setIntensity(self.isActive ? dimmed : full),
+        }),
+      );
+      // refresh once layout has settled (Lenis + late paint)
+      const rafId = requestAnimationFrame(() => ScrollTrigger.refresh());
+      return () => {
+        cancelAnimationFrame(rafId);
+        triggers.forEach((t) => t.kill());
+      };
+    },
+    { dependencies: [intensity] },
   );
 
   return (
