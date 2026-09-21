@@ -7,15 +7,16 @@
     src: url("/fonts/Modern Negra Demo.ttf") format("truetype");
 }
 
-/* Digit fallback — "Modern Negra Demo" ships digits (U+0030-0039) as a demo
-   watermark glyph, not real numerals, so "3D" rendered as a smudge. Same
-   family name + unicode-range scoped to digits only, declared AFTER the demo
+/* Digit + ampersand fallback — "Modern Negra Demo" ships digits (U+0030-0039)
+   and '&' (U+0026) as a demo watermark glyph, not real glyphs, so "3D" and
+   "Game Dev & Level Design" rendered as a smudge. Same family name +
+   unicode-range scoped to those codepoints only, declared AFTER the demo
    TTF so it wins for overlapping codepoints. DM Serif Text chosen because it
    is already on the site and its editorial serif pairs with Modern Negra. */
 @font-face {
     font-family: "Modern Negra";
     src: url("/fonts/dm-serif-text-latin.woff2") format("woff2");
-    unicode-range: U+0030-0039;
+    unicode-range: U+0026, U+0030-0039;
 }
 
 @theme {
