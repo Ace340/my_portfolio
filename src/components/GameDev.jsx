@@ -213,7 +213,7 @@ const GameDev = () => {
           <div className="sub-content">
             <p className="intro">
               Outside of front-end, I build games and design levels under Taco Monkey
-              Studio — game-jam experiments and immersive shooters built in Unity.
+              Studio. Game-jam experiments and immersive shooters built in Unity.
             </p>
           </div>
         </div>

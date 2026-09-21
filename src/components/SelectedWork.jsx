@@ -243,7 +243,7 @@ const SelectedWork = () => {
           </div>
           <div className="sub-content">
             <p className="intro">
-              Selected interactive front-end work — interfaces built with React,
+              Selected interactive front-end work. Interfaces built with React,
               Next.js, Three.js and GSAP.
             </p>
           </div>
