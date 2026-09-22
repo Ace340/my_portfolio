@@ -63,10 +63,15 @@ const socials = [
 	url: "https://www.instagram.com/ace340/",
  },
  {
-	name: "Linkedin",
-	icon: "/images/linkedin-logo2.png",
-	url: "https://www.linkedin.com/in/juan-aceved0/",
- },
+ 	name: "Linkedin",
+ 	icon: "/images/linkedin-logo2.png",
+ 	url: "https://www.linkedin.com/in/juan-aceved0/",
+  },
+ {
+ 	name: "GitHub",
+ 	icon: "/images/github.svg",
+ 	url: "https://github.com/Ace340",
+  },
 ];
 
 const allPassions = [
@@ -163,7 +168,7 @@ const caseStudies = [
 const aboutCopy = {
 	eyebrow: "About",
 	title: "Front-end Creative Developer",
-	body: "I build fast, expressive web interfaces where real-time 3D (Three.js / WebGL) and motion (GSAP) are part of the front-end craft — not a separate discipline. I care about performance, accessibility, and the feel of every interaction.",
+	body: "I build fast, expressive web interfaces where real-time 3D (Three.js / WebGL) and motion (GSAP) are part of the front-end craft, not a separate discipline. I care about performance, accessibility, and the feel of every interaction.",
 };
 
 // Game Dev & Level Design — passion track (plan.md §4.5). Taco Monkey Studio
