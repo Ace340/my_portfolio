@@ -20,7 +20,7 @@ const isMobileViewport = () =>
  * It is the *complement* of the hero, not a rival: the hero proves
  * vertex / 3D-object craft; this proves fragment / 2D-field craft. A domain-
  * warped FBM field drifts slowly, dark and low-contrast at rest so light About
- * copy reads on top, then gains contrast and a whisper of the brand yellow as
+ * copy reads on top, then gains contrast and a whisper of the brand navy as
  * attention (scroll dwell) rises — and settles again. Deliberately recessive.
  *
  * WebGL path only. A fullscreen clip-space quad carries the shader; the vertex
@@ -120,10 +120,10 @@ export function createLiveProofScene(canvas, options = {}) {
         float n2 = fbm(w * 1.6 - vec2(t * 0.4, 0.0));
         float field = n1 * 0.6 + n2 * 0.4; // ~0..1
 
-        // Palette — valleys stay near-black (legibility); ridges lift warm/yellow.
+        // Palette — valleys stay near-black (legibility); ridges lift cool/navy.
         vec3 base   = vec3(0.020, 0.020, 0.026); // near-black valley ~#050508
-        vec3 mid    = vec3(0.22, 0.18, 0.16);    // warm ridge (raised for brightness)
-        vec3 yellow = vec3(0.906, 0.827, 0.576); // #E7D393 — SAME hot tint as the hero
+        vec3 mid    = vec3(0.10, 0.14, 0.28);    // cool navy ridge (raised for brightness)
+        vec3 accent = vec3(0.118, 0.227, 0.541); // #1E3A8A — SAME hot tint as the hero
 
         // uIntensity is the per-instance BRIGHTNESS knob (About: text-safe ~0.8;
         // Selected Work: brighter ~1.5 — content lives in cards above it). It scales
@@ -134,14 +134,14 @@ export function createLiveProofScene(canvas, options = {}) {
         float rest = smoothstep(0.15, 0.95, field);
         vec3 col = mix(base, mid, rest * (0.55 * bright));
 
-        // Reveal adds contrast + brand-yellow on the brightest crests.
+        // Reveal adds contrast + brand-navy on the brightest crests.
         float reveal = uReveal * bright;
         col = mix(col, mid * 1.6, field * reveal * 0.5);
         float ridge = smoothstep(0.5, 0.82, field);
-        col += yellow * ridge * reveal * 0.55;
+        col += accent * ridge * reveal * 0.55;
 
         // LEGIBILITY: valleys stay ~#050508 (white copy clears WCAG AA easily);
-        // ridges lift warm/yellow, scaled by per-instance intensity. About uses a
+        // ridges lift cool/navy, scaled by per-instance intensity. About uses a
         // lower intensity so its centered copy stays legible — verify in-browser
         // over the real copy and dial intensity down if needed.
         col = max(col, base); // never darker than base (avoid black holes)
@@ -216,7 +216,7 @@ export function createLiveProofScene(canvas, options = {}) {
 
   if (config.reducedMotion) {
     // Static frame, no RAF (avoid vestibular triggers). The field is dark at
-    // rest so this is a calm poster; uReveal stays 0 (no yellow), uIntensity 0.
+    // rest so this is a calm poster; uReveal stays 0 (no accent tint), uIntensity 0.
     renderer.render(scene, camera);
   } else {
     clock.start();

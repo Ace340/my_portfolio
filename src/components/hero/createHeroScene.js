@@ -101,9 +101,9 @@ export function createHeroScene(canvas, options = {}) {
       varying vec3 vViewDir;
 
       void main() {
-        // base near-white; bulges tint toward the brand yellow (#e7d393)
+        // base near-white; bulges tint toward the brand navy (#1e3a8a)
         vec3 base = vec3(0.95, 0.95, 0.98);
-        vec3 hot  = vec3(0.906, 0.827, 0.576);
+        vec3 hot  = vec3(0.118, 0.227, 0.541);
         vec3 col = mix(base, hot, smoothstep(-0.05, 0.18, vDistort));
         // fresnel rim for readable 3D depth
         float fres = pow(1.0 - max(dot(normalize(vNormalView), normalize(vViewDir)), 0.0), 2.5);

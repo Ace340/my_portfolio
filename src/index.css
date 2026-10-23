@@ -20,7 +20,7 @@
 }
 
 @theme {
-    --color-yellow: #e7d393;
+    --color-accent: #7aa2f7;
     --color-white-100: #efefef;
     --font-sans: "Mona Sans", sans-serif;
     --font-modern-negra: "Modern Negra", sans-serif;
@@ -163,7 +163,7 @@ html.lenis body {
                 @apply flex lg:flex-row flex-col w-full gap-10 justify-between items-center lg:items-end mx-auto;
 
                 p:nth-of-type(2) {
-                    @apply font-modern-negra text-6xl text-yellow max-w-xl;
+                    @apply font-modern-negra text-6xl text-accent max-w-xl;
                 }
 
                 p:last-of-type {
@@ -178,7 +178,7 @@ html.lenis body {
                     }
 
                     a {
-                        @apply font-semibold opacity-80 2xl:text-start text-center hover:text-yellow;
+                        @apply font-semibold opacity-80 2xl:text-start text-center hover:text-accent;
                     }
                 }
             }
@@ -222,7 +222,7 @@ html.lenis body {
                     @apply flex justify-between items-start;
 
                     h3 {
-                        @apply font-modern-negra 2xl:text-3xl text-xl text-yellow;
+                        @apply font-modern-negra 2xl:text-3xl text-xl text-accent;
                     }
 
                     p {
@@ -287,7 +287,7 @@ html.lenis body {
         }
 
         .case-flag {
-            @apply absolute top-4 left-4 z-10 rounded-full bg-yellow text-black px-3 py-1 text-xs font-semibold;
+            @apply absolute top-4 left-4 z-10 rounded-full bg-accent text-black px-3 py-1 text-xs font-semibold;
         }
 
         .case-overlay {
@@ -305,7 +305,7 @@ html.lenis body {
         }
 
         .case-role {
-            @apply text-yellow text-xs uppercase tracking-[0.2em] mb-2;
+            @apply text-accent text-xs uppercase tracking-[0.2em] mb-2;
         }
 
         .case-name {
@@ -374,7 +374,7 @@ html.lenis body {
             }
 
             .reel-title {
-                @apply font-modern-negra text-2xl md:text-3xl text-yellow;
+                @apply font-modern-negra text-2xl md:text-3xl text-accent;
             }
 
             .reel-blurb {
@@ -386,7 +386,7 @@ html.lenis body {
             }
 
             &:hover .reel-play {
-                @apply text-yellow;
+                @apply text-accent;
             }
         }
 
@@ -426,7 +426,7 @@ html.lenis body {
         }
 
         .game-role {
-            @apply text-yellow text-xs uppercase tracking-[0.2em] mb-2;
+            @apply text-accent text-xs uppercase tracking-[0.2em] mb-2;
         }
 
         .game-name {
@@ -461,7 +461,7 @@ html.lenis body {
             @apply grid md:grid-cols-3 grid-cols-1 md:gap-20 gap-10 sm:mb-32 mb-20 relative z-10 md:max-w-6xl md:mx-auto;
 
             button {
-                @apply md:text-3xl text-xl pb-2 cursor-pointer hover:text-yellow hover:border-yellow border-b-1 transition-colors font-modern-negra;
+                @apply md:text-3xl text-xl pb-2 cursor-pointer hover:text-accent hover:border-accent border-b-1 transition-colors font-modern-negra;
             }
         }
 
@@ -472,7 +472,7 @@ html.lenis body {
                 @apply flex items-center justify-between w-full absolute;
 
                 button {
-                    @apply text-white hover:text-yellow cursor-pointer transition-colors max-w-36;
+                    @apply text-white hover:text-accent cursor-pointer transition-colors max-w-36;
 
                     span {
                         @apply text-3xl font-modern-negra leading-none hidden md:block;
@@ -496,7 +496,7 @@ html.lenis body {
                 @apply space-y-4 lg:translate-y-20;
 
                 #title {
-                    @apply font-modern-negra md:text-6xl text-3xl text-yellow max-w-40;
+                    @apply font-modern-negra md:text-6xl text-3xl text-accent max-w-40;
                 }
             }
 

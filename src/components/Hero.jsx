@@ -86,7 +86,7 @@ const Hero = () => {
         </p>
         <a
           href="#projects"
-          className="pointer-events-auto rounded-full border border-white/30 px-6 py-2 text-sm text-white/90 transition-colors hover:border-yellow hover:text-yellow"
+          className="pointer-events-auto rounded-full border border-white/30 px-6 py-2 text-sm text-white/90 transition-colors hover:border-accent hover:text-accent"
         >
           View Work
         </a>

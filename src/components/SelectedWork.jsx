@@ -238,7 +238,7 @@ const SelectedWork = () => {
             <p className="badge">Selected Work</p>
             <h2>
               Front-end work where <span className="text-white">motion</span> and{' '}
-              <span className="text-yellow">3D</span> are part of the craft
+              <span className="text-accent">3D</span> are part of the craft
             </h2>
           </div>
           <div className="sub-content">

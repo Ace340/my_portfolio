@@ -207,7 +207,7 @@ const GameDev = () => {
           <div className="md:col-span-8">
             <p className="badge">Beyond the Code</p>
             <h2>
-              Game Dev & <span className="text-yellow">Level Design</span>
+              Game Dev & <span className="text-accent">Level Design</span>
             </h2>
           </div>
           <div className="sub-content">
