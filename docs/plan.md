@@ -28,7 +28,7 @@ A visitor (recruiter) lands and, within seconds:
 
 ## 4. Information architecture (Funnel)
 
-1. **Hero** — reactive 3D "JUAN" + role line *"Front-end Creative Developer"* + one CTA
+1. **Hero** — reactive 3D "JUAN" + role line *"Front-end Creative Developer"* + one CTA *(amended 2026-10-22: plus the Ambient Hue control — a pitch affordance beside the CTA, visually subordinate; see ADR-0004)*
 2. **About** — short positioning (replaces XR-flavored intro), set against a *subordinate Live Proof* background — a responsive-ambient shader that's quiet at rest and reveals its craft on cursor/scroll attention, then settles. *(Not yet rendered in `App.jsx` — to be built.)*
 3. **Selected Work** — 3 case-study reveals: Mints-on-the-House site, Pangea, Soluciones Fino
 4. **Tech Stack** — front-end-focused (Unity stays *under gamedev*; XR rows dropped)
@@ -44,6 +44,7 @@ A visitor (recruiter) lands and, within seconds:
 - **Project treatment (D):** clip-path / image-mask case-study reveals + 3D-tilt hover.
 - **Live Proof (C):** a responsive-ambient fragment shader. Complementary to — not redundant with — the hero: the hero proves *vertex / 3D-object* shader craft, this proves *fragment / 2D-field* shader craft. **Realized as a single site-wide ambient background** (2026-07-12, ADR-0003): one fixed full-viewport layer behind all content, driven by global cursor + scroll. It **starts after the hero** — the hero section carries an opaque backing so the field is occluded while the hero is in view, protecting the Signature Moment (CONTEXT.md). Below the hero, transparent sections show the field; sections with their own opaque/gradient backgrounds (e.g. `#contact`) become natural calm zones. The degrade story (mobile intensity derate + DPR cap, adaptive frame-rate guard, static poster for `prefers-reduced-motion`) is **part of the proof**, not a polish step — a fixed always-on background has no offscreen RAF-pause, so the guards carry the GPU cost.
 - **Mobile:** ship real WebGL, **degrade gracefully** (cap DPR, reduce effects); honor `prefers-reduced-motion`.
+- **Ambient Hue (E):** visitor-adjustable site color, *part of the pitch* — a slider beside the hero CTA blending **blue ↔ yellow** along the hue path. Drives the Live Proof field, the hero's bulge tint, and a contrast-derived accent (lighter on dark hues, darker on light hues) under a **brightness ceiling** that keeps white body copy legible. Resets on reload (2026-10-22, ADR-0004).
 
 ## 6. Build sequence (vertical slices, riskiest first)
 
