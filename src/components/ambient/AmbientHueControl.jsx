@@ -49,9 +49,9 @@ const AmbientHueControl = () => {
         aria-expanded={open}
         aria-haspopup="dialog"
         aria-controls="ambient-hue-popover"
-        className="rounded-full border border-white/15 px-4 py-1.5 text-xs text-white/60 transition-colors hover:border-white/40 hover:text-white/85"
+        className="rounded-full border border-white/15 px-6 py-2 text-sm text-white/60 transition-colors hover:border-white/40 hover:text-white/85"
       >
-        Choose Color
+        Ambient Hue
       </button>
 
       {open && (
