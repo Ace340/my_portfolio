@@ -10,12 +10,12 @@ Work the **frontier**: any ticket whose blockers are all done. T2 and T3 can run
 
 **Blocked by:** None — can start immediately.
 
-- [ ] Button renders beside the funnel CTA and reads clearly as secondary to "View Work"
-- [ ] Popover opens from the button; one slider with blue/yellow endpoints
-- [ ] Dragging recolors the Live Proof field live across the whole site (below the hero)
-- [ ] The midpoint of the drag passes through teal/green — no muddy gray at any position
-- [ ] Field stays legible behind white body copy at every position (yellow end is deep goldenrod)
-- [ ] Reload returns to brand navy; nothing is written to localStorage or cookies
+- [x] Button renders beside the funnel CTA and reads clearly as secondary to "View Work"
+- [x] Popover opens from the button; one slider with blue/yellow endpoints
+- [x] Dragging recolors the Live Proof field live across the whole site (below the hero)
+- [x] The midpoint of the drag passes through teal/green — no muddy gray at any position
+- [x] Field stays legible behind white body copy at every position (yellow end is deep goldenrod)
+- [x] Reload returns to brand navy; nothing is written to localStorage or cookies
 
 ## T2 — Accent follows the Ambient Hue (contrast-derived)
 
@@ -23,10 +23,10 @@ Work the **frontier**: any ticket whose blockers are all done. T2 and T3 can run
 
 **Blocked by:** T1 — Ambient Hue core: "Choose Color" slider drives the Live Proof field.
 
-- [ ] All accent text/UI follows the current hue live while dragging
-- [ ] Accent is lighter than the field on dark hues and darker on light hues (visible polarity flip toward yellow)
-- [ ] Teal and green midpoints remain readable (accent text, flags, hovers)
-- [ ] No hardcoded accent token remains — the Ambient Hue is the single source of truth
+- [x] All accent text/UI follows the current hue live while dragging
+- [x] Accent is lighter than the field on dark hues and darker on light hues (visible polarity flip toward yellow)
+- [x] Teal and green midpoints remain readable (accent text, flags, hovers)
+- [x] No hardcoded accent token remains — the Ambient Hue is the single source of truth
 
 ## T3 — Hero bulge tint follows the Ambient Hue
 

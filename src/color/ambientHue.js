@@ -13,8 +13,8 @@
  *
  * Pure by design (code-quality.md): no THREE, no DOM, no state — same input,
  * same output. This module is the single source of truth for the hue journey;
- * the scene factory reads it now, and the accent derivation (T2) and hero
- * tint (T3) will read the same anchors.
+ * the scene factory reads it now, the accent derivation (T2) reads it too,
+ * and the hero tint (T3) will read the same anchors.
  */
 
 /** Near-black valley (~#050508) — constant legibility floor, never remixed. */
@@ -75,4 +75,44 @@ export const ambientHuePalette = (t) => {
     ridge: blendAnchor(RIDGE_START, RIDGE_END, u),
     accent: blendAnchor(ACCENT_START, ACCENT_END, u),
   };
+};
+
+/*
+ * UI accent anchors — the contrast-derived accent for text/flags/hovers
+ * (ticket T2, ADR-0004 #3: "lighter on dark hues, darker on light hues").
+ *
+ * START is the exact HSL of the pre-Ambient-Hue token #7aa2f7, so t = 0
+ * renders today's accent unchanged. END is a dark amber on the field's
+ * goldenrod hue (42.7°) whose WCAG luminance sits BELOW the field crest's
+ * (#B8860B, Y ≈ 0.273) — the visible polarity flip — while still clearing
+ * 4.5:1 on the near-black base. The mid path rides the same teal → green
+ * hue journey as the field at a lifted luminance, so the stress cases stay
+ * readable at every position.
+ */
+const UI_ACCENT_START = { h: 220.8, s: 0.8865, l: 0.7235 }; // #7aa2f7 — today's accent
+const UI_ACCENT_END = { h: 42.7, s: 0.78, l: 0.36 }; // #a37a14 — dark amber, darker than the goldenrod crest
+
+const toHexChannel = (v) => {
+  const hex = Math.round(Math.min(1, Math.max(0, v)) * 255).toString(16);
+  return hex.length === 1 ? `0${hex}` : hex;
+};
+
+/**
+ * The contrast-derived UI accent at slider position `t`, as a CSS hex.
+ *
+ * Feeds `--color-accent` (accentHueBinding.js), which every accent utility
+ * (`text-accent`, `bg-accent`, `border-accent`, `accent-accent`) reads.
+ * Same HSL-blend machinery as the field palette — saturation never
+ * collapses on the drag.
+ *
+ * @param {number} t slider position 0..1 (clamped; non-finite → 0 = navy)
+ * @returns {string} CSS hex color, e.g. "#7aa2f7" at t = 0
+ */
+export const ambientHueAccentCss = (t) => {
+  const { r, g, b } = blendAnchor(
+    UI_ACCENT_START,
+    UI_ACCENT_END,
+    normalizeAmbientHue(t)
+  );
+  return `#${toHexChannel(r)}${toHexChannel(g)}${toHexChannel(b)}`;
 };
