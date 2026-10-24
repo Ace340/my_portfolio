@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { FBM_GLSL } from './fbm.glsl.js';
+import { ambientHuePalette } from '../../color/ambientHue.js';
 
 const DEFAULTS = {
   intensity: 1.2, // per-instance brightness/reveal strength; auto-derated on small screens
@@ -30,9 +31,10 @@ const isMobileViewport = () =>
  * @param {{ intensity?: number, reducedMotion?: boolean }} [options]
  *   `intensity` sets the per-instance brightness/reveal strength (mobile auto-derates to ~55%).
  *   `reducedMotion` renders a single static frame with no input/RAF wiring.
- * @returns {{ dispose: () => void, uniforms: Record<string, THREE.IUniform>, setPointer: (x: number, y: number) => void, setScroll: (v: number) => void, setReveal: (v: number) => void, setActive: (v: boolean) => void }}
+ * @returns {{ dispose: () => void, uniforms: Record<string, THREE.IUniform>, setPointer: (x: number, y: number) => void, setScroll: (v: number) => void, setReveal: (v: number) => void, setActive: (v: boolean) => void, setAmbientHue: (v: number) => void }}
  *   `dispose` tears down RAF + listeners + GPU resources. `setPointer`/`setScroll`/
- *   `setReveal` feed the eased interaction targets. `setActive(false)` halts the
+ *   `setReveal` feed the eased interaction targets. `setAmbientHue(t)` recolors the
+ *   palette along the ADR-0004 hue path (0 = brand navy). `setActive(false)` halts the
  *   RAF (GPU-cost discipline when the section is offscreen — part of the "proof",
  *   plan.md §5C). On small screens or under sustained <30fps the renderer caps DPR
  *   and steps `uIntensity` down (one-way) so the field degrades gracefully.
@@ -49,6 +51,15 @@ export function createLiveProofScene(canvas, options = {}) {
       ? config.intensity * 0.55
       : config.intensity;
 
+  // Ambient Hue palette (ADR-0004): the whole palette rides uniforms written
+  // in place by setAmbientHue. setRGB is authored-value passthrough —
+  // deliberately NOT the hex constructor, which would round-trip through sRGB
+  // ColorManagement. `base` never varies (the near-black legibility floor is
+  // never remixed) but shares the same path so the palette has ONE source of
+  // truth (ambientHue.js).
+  const toColor = ({ r, g, b }) => new THREE.Color().setRGB(r, g, b);
+  const initialPalette = ambientHuePalette(0);
+
   const uniforms = {
     uTime: { value: 0 },
     uMouse: { value: new THREE.Vector2(0, 0) },
@@ -56,6 +67,9 @@ export function createLiveProofScene(canvas, options = {}) {
     uScroll: { value: 0 },
     uReveal: { value: 0 },
     uIntensity: { value: baseIntensity },
+    uColorBase: { value: toColor(initialPalette.base) },
+    uColorRidge: { value: toColor(initialPalette.ridge) },
+    uColorAccent: { value: toColor(initialPalette.accent) },
   };
 
   // Interaction targets (cursor + scroll + reveal). The RAF loop eases the
@@ -94,6 +108,9 @@ export function createLiveProofScene(canvas, options = {}) {
       uniform float uScroll;
       uniform float uReveal;
       uniform float uIntensity;
+      uniform vec3 uColorBase;
+      uniform vec3 uColorRidge;
+      uniform vec3 uColorAccent;
       varying vec2 vUv;
 
       void main() {
@@ -120,10 +137,15 @@ export function createLiveProofScene(canvas, options = {}) {
         float n2 = fbm(w * 1.6 - vec2(t * 0.4, 0.0));
         float field = n1 * 0.6 + n2 * 0.4; // ~0..1
 
-        // Palette — valleys stay near-black (legibility); ridges lift cool/navy.
-        vec3 base   = vec3(0.020, 0.020, 0.026); // near-black valley ~#050508
-        vec3 mid    = vec3(0.10, 0.14, 0.28);    // cool navy ridge (raised for brightness)
-        vec3 accent = vec3(0.118, 0.227, 0.541); // #1E3A8A — SAME hot tint as the hero
+        // Palette (uniforms, from ambientHue.js — one source of truth):
+        // valleys stay near-black — the constant legibility floor; the
+        // ridge/accent tint rides the Ambient Hue (ADR-0004 hue path:
+        // blue → teal → green → deep goldenrod, brightness-capped so white
+        // copy stays legible at every slider position; default = brand navy,
+        // numerically identical to the old hardcoded constants).
+        vec3 base   = uColorBase;    // near-black valley ~#050508 (constant)
+        vec3 mid    = uColorRidge;   // hue-derived ridge (cool navy at t = 0)
+        vec3 accent = uColorAccent;  // hue-derived crest tint (#1E3A8A at t = 0)
 
         // uIntensity is the per-instance BRIGHTNESS knob (About: text-safe ~0.8;
         // Selected Work: brighter ~1.5 — content lives in cards above it). It scales
@@ -237,6 +259,21 @@ export function createLiveProofScene(canvas, options = {}) {
   };
 
   /**
+   * Ambient Hue 0..1 (ADR-0004). Recolors the palette uniforms in place
+   * along the hue path (base included — constant value, kept on the same
+   * path so the palette has one source of truth) — uniform values re-upload
+   * every frame, so no flags are needed. Under reduced motion there is no
+   * RAF loop: re-render the static poster once so it reflects the chosen hue.
+   */
+  const setAmbientHue = (t) => {
+    const palette = ambientHuePalette(t);
+    uniforms.uColorBase.value.copy(toColor(palette.base));
+    uniforms.uColorRidge.value.copy(toColor(palette.ridge));
+    uniforms.uColorAccent.value.copy(toColor(palette.accent));
+    if (config.reducedMotion) renderer.render(scene, camera);
+  };
+
+  /**
    * Gate the RAF. setActive(false) halts rendering (GPU-cost discipline while
    * the section is offscreen); setActive(true) resumes. No-op for reduced-motion
    * (static frame, no loop to run).
@@ -266,5 +303,5 @@ export function createLiveProofScene(canvas, options = {}) {
     renderer.dispose();
   };
 
-  return { dispose, uniforms, setPointer, setScroll, setReveal, setActive };
+  return { dispose, uniforms, setPointer, setScroll, setReveal, setActive, setAmbientHue };
 }

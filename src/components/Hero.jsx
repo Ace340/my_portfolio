@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { createHeroScene } from './hero/createHeroScene.js';
+import AmbientHueControl from './ambient/AmbientHueControl.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,12 +85,18 @@ const Hero = () => {
         <p className="text-sm uppercase tracking-[0.3em] text-white/70 md:text-base">
           Front-end Creative Developer
         </p>
-        <a
-          href="#projects"
-          className="pointer-events-auto rounded-full border border-white/30 px-6 py-2 text-sm text-white/90 transition-colors hover:border-accent hover:text-accent"
-        >
-          View Work
-        </a>
+        {/* Funnel CTA row: "View Work" stays visually PRIMARY; the Ambient
+            Hue control is the subordinate pitch affordance beside it — the
+            one sanctioned amendment to the single-CTA rule (ADR-0004 #1). */}
+        <div className="flex items-center gap-3">
+          <a
+            href="#projects"
+            className="pointer-events-auto rounded-full border border-white/30 px-6 py-2 text-sm text-white/90 transition-colors hover:border-accent hover:text-accent"
+          >
+            View Work
+          </a>
+          <AmbientHueControl />
+        </div>
       </div>
     </section>
   );

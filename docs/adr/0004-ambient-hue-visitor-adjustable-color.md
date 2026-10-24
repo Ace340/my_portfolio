@@ -39,6 +39,7 @@ A visitor-controlled color could dilute all three: a second CTA competing with t
 
 - Two buttons in the hero CTA row; "View Work" must stay visually primary (design constraint, not a given).
 - The shader palettes stop being hard-coded constants — hue becomes a runtime parameter, and the accent rule becomes real color math (derived contrast), not a static token.
+- The hue signal ships as a tiny module-scope pub/sub (`src/color/ambientHueStore.js`) — a conscious, documented deviation from `.opencode/context/core/standards/code-quality.md`'s "no global state" rule: uniform mutation is the update channel (zero React re-renders while dragging), and the value is session-only by design (decision 5).
 - The accent polarity flip must be tested across the whole slider range; the teal/green midpoints are the actual stress cases.
 - A future "remember my color" request would contradict decision 5 — reopen this ADR, don't bolt it on.
 
