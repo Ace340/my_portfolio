@@ -11,6 +11,15 @@
  * (L ≈ 0.38, not bright yellow) so white body copy stays legible at every
  * position. Valleys stay near-black at all times — `base` never varies.
  *
+ * Perceptual equalization (T4 finding, 2026-10-25): HSL lightness is NOT
+ * perceptual luminance — teal/green anchors at the same HSL `l` render far
+ * brighter (WCAG) than the endpoints, so field crests under white body copy
+ * dropped below AA at the mid hues. The field palette therefore SOLVES each
+ * position's lightness so its WCAG luminance follows the endpoints' straight
+ * journey (blendAnchorPerceptual). The UI accent keeps the plain HSL blend:
+ * it clears AA against the dark base at every position (5.2–14.8:1), and its
+ * accepted T2 look is left untouched.
+ *
  * Pure by design (code-quality.md): no THREE, no DOM, no state — same input,
  * same output. This module is the single source of truth for the hue journey;
  * the scene factory reads it now, the accent derivation (T2) reads it too,
@@ -55,14 +64,67 @@ const hslToRgb = (h, s, l) => {
   return { r: channel(1 / 3), g: channel(0), b: channel(-1 / 3) };
 };
 
+/**
+ * Linear HSL blend — the UI-accent path (ambientHueAccentCss). The field
+ * palette uses blendAnchorPerceptual instead (T4): see the module header.
+ */
 const blendAnchor = (start, end, t) =>
   hslToRgb(lerp(start.h, end.h, t), lerp(start.s, end.s, t), lerp(start.l, end.l, t));
+
+/** WCAG 2.x relative luminance of an sRGB {r,g,b} in 0..1 (perceptual). */
+const linearizeChannel = (c) =>
+  c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+
+const wcagLuminance = ({ r, g, b }) =>
+  0.2126 * linearizeChannel(r) +
+  0.7152 * linearizeChannel(g) +
+  0.0722 * linearizeChannel(b);
+
+/**
+ * Solve the HSL lightness that renders `targetLum` WCAG luminance at the
+ * given hue/saturation. Luminance is monotonic non-decreasing in lightness
+ * (raising `l` raises every RGB channel), so a binary search converges.
+ * Pure: same inputs, same output.
+ */
+const solveLightnessForLuminance = (h, s, targetLum) => {
+  let lo = 0;
+  let hi = 1;
+  for (let i = 0; i < 30; i += 1) {
+    const mid = (lo + hi) / 2;
+    if (wcagLuminance(hslToRgb(h, s, mid)) < targetLum) lo = mid;
+    else hi = mid;
+  }
+  return (lo + hi) / 2;
+};
+
+/**
+ * Field-palette blend (T4): travels the anchors' hue/saturation path, but
+ * solves lightness per position so WCAG luminance follows the endpoints'
+ * straight journey — cancelling the HSL-lightness trap that let teal/green
+ * crests outrun the goldenrod ceiling in perceptual brightness. Endpoints
+ * short-circuit to the exact anchor colors, so t=0 (brand navy) and t=1
+ * (deep goldenrod) stay byte-identical to the accepted constants.
+ */
+const blendAnchorPerceptual = (start, end, t) => {
+  if (t <= 0) return hslToRgb(start.h, start.s, start.l);
+  if (t >= 1) return hslToRgb(end.h, end.s, end.l);
+  const h = lerp(start.h, end.h, t);
+  const s = lerp(start.s, end.s, t);
+  const targetLum = lerp(
+    wcagLuminance(hslToRgb(start.h, start.s, start.l)),
+    wcagLuminance(hslToRgb(end.h, end.s, end.l)),
+    t
+  );
+  return hslToRgb(h, s, solveLightnessForLuminance(h, s, targetLum));
+};
 
 /**
  * The Ambient Hue palette at slider position `t`.
  *
  * `accent` tints the field's brightest crests; `ridge` is the lifted mid
  * tone; `base` is the constant near-black valley (legibility floor).
+ * ridge/accent ride the perceptually-equalized path (T4) so crest
+ * brightness tracks the endpoints' WCAG-luminance journey, not HSL `l`.
  *
  * @param {number} t slider position 0..1 (clamped; non-finite → 0 = navy)
  * @returns {{ base: {r: number, g: number, b: number}, ridge: {r: number, g: number, b: number}, accent: {r: number, g: number, b: number} }}
@@ -72,8 +134,8 @@ export const ambientHuePalette = (t) => {
   const u = normalizeAmbientHue(t);
   return {
     base: AMBIENT_BASE,
-    ridge: blendAnchor(RIDGE_START, RIDGE_END, u),
-    accent: blendAnchor(ACCENT_START, ACCENT_END, u),
+    ridge: blendAnchorPerceptual(RIDGE_START, RIDGE_END, u),
+    accent: blendAnchorPerceptual(ACCENT_START, ACCENT_END, u),
   };
 };
 

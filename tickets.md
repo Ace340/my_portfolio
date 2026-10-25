@@ -45,8 +45,8 @@ Work the **frontier**: any ticket whose blockers are all done. T2 and T3 can run
 
 **Blocked by:** T2 — Accent follows the Ambient Hue (contrast-derived); T3 — Hero bulge tint follows the Ambient Hue.
 
-- [ ] Legibility pass across sampled positions (blue / teal / green / goldenrod × desktop / mobile) — body copy, accents, flags
-- [ ] Reduced-motion poster uses the current hue (or brand navy if never touched)
-- [ ] Popover: keyboard operable, ESC closes, focus returns to the button
-- [ ] Confirmed: no persistence of any kind across reloads
-- [ ] Build + lint clean
+- [x] Legibility pass across sampled positions (blue / teal / green / goldenrod × desktop / mobile) — body copy, accents, flags
+- [x] Reduced-motion poster uses the current hue (or brand navy if never touched)
+- [x] Popover: keyboard operable, ESC closes, focus returns to the button
+- [x] Confirmed: no persistence of any kind across reloads
+- [x] Build + lint clean
