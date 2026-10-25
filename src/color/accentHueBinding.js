@@ -23,10 +23,9 @@ import { subscribeAmbientHue } from './ambientHueStore.js';
  * `subscribeAmbientHue` fires once immediately with the session value, so
  * binding applies the right color even before any drag (and on remount).
  *
- * @param {HTMLElement} [root=document.documentElement] element carrying the token
  * @returns {() => void} unsubscribe
  */
-export const bindAccentToAmbientHue = (root = document.documentElement) =>
+export const bindAccentToAmbientHue = () =>
   subscribeAmbientHue((t) => {
-    root.style.setProperty('--color-accent', ambientHueAccentCss(t));
+    document.documentElement.style.setProperty('--color-accent', ambientHueAccentCss(t));
   });

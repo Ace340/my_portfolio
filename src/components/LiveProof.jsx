@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { createLiveProofScene } from './about/createLiveProofScene.js';
-import { subscribeAmbientHue } from '../color/ambientHueStore.js';
+import { useAmbientHueListener } from '../color/useAmbientHueListener.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -91,16 +91,10 @@ const LiveProof = ({ intensity = 0.8 }) => {
     { dependencies: [] },
   );
 
-  // 4. Ambient Hue → palette uniforms (ADR-0004). Subscription, not React
-  // state: drags mutate the scene's uniforms directly — zero re-renders. The
-  // store syncs new subscribers immediately, so a remounted scene (intensity
-  // change) re-applies the session hue. Keyed on `intensity` to re-subscribe
-  // after the scene remounts (effect order: this runs after the mount effect).
-  // Nothing is persisted (ADR-0004 #5).
-  useEffect(() => {
-    if (!canvasRef.current) return undefined;
-    return subscribeAmbientHue((t) => apiRef.current?.setAmbientHue(t));
-  }, [intensity]);
+  // 4. Ambient Hue → palette uniforms (ADR-0004). Keyed on `intensity` to
+  // re-subscribe after the scene remounts (effect order: this runs after the
+  // mount effect). Nothing is persisted (ADR-0004 #5).
+  useAmbientHueListener((t) => apiRef.current?.setAmbientHue(t), [intensity]);
 
   return (
     <canvas

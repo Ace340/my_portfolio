@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getAmbientHue, setAmbientHue } from '../../color/ambientHueStore.js';
 
 /**
- * AmbientHueControl — the "Choose Color" pitch affordance (ADR-0004 #1).
+ * AmbientHueControl — the "Ambient Hue" pitch affordance (ADR-0004 #1).
  *
  * A visually-subordinate button beside the hero's "View Work" CTA opens a
  * popover with ONE blend slider (blue ↔ goldenrod). Dragging pushes the hue
@@ -20,7 +20,9 @@ const AmbientHueControl = () => {
   const rootRef = useRef(null);
   const buttonRef = useRef(null);
 
-  // ESC closes (focus returns to the button); outside pointer-press closes.
+  // ESC closes (focus returns to the button); outside pointer-press closes
+  // (focus returns to the button too, when the popover held focus — a click
+  // on another focusable element still takes focus naturally afterwards).
   useEffect(() => {
     if (!open) return undefined;
     const onKeyDown = (e) => {
@@ -30,7 +32,12 @@ const AmbientHueControl = () => {
       }
     };
     const onPointerDown = (e) => {
-      if (rootRef.current && !rootRef.current.contains(e.target)) setOpen(false);
+      if (rootRef.current && !rootRef.current.contains(e.target)) {
+        setOpen(false);
+        if (rootRef.current.contains(document.activeElement)) {
+          buttonRef.current?.focus();
+        }
+      }
     };
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('pointerdown', onPointerDown);

@@ -1,12 +1,12 @@
 # Tickets: Ambient Hue
 
-A visitor-adjustable ambient color for the site — the "Choose Color" slider beside the hero CTA — built per [ADR-0004](docs/adr/0004-ambient-hue-visitor-adjustable-color.md) and the *Ambient Hue* glossary entry in [`CONTEXT.md`](CONTEXT.md).
+A visitor-adjustable ambient color for the site — the "Ambient Hue" slider beside the hero CTA — built per [ADR-0004](docs/adr/0004-ambient-hue-visitor-adjustable-color.md) and the *Ambient Hue* glossary entry in [`CONTEXT.md`](CONTEXT.md).
 
 Work the **frontier**: any ticket whose blockers are all done. T2 and T3 can run in parallel once T1 lands.
 
-## T1 — Ambient Hue core: "Choose Color" slider drives the Live Proof field
+## T1 — Ambient Hue core: "Ambient Hue" slider drives the Live Proof field
 
-**What to build:** A visitor sees a second, visually-subordinate button — "Choose Color" — beside the hero's "View Work" CTA. Activating it opens a small popover with a single blend slider, endpoints **blue ↔ yellow**. Dragging recolors the site-wide Live Proof field live: the blended color journeys along the **hue path** (blue → teal → green → deep goldenrod) — never muddy RGB gray. Valleys stay near-black; ridge/accent tints derive from the chosen hue at a **capped luminance** (the yellow end is a deep goldenrod, not bright yellow — the brightness ceiling keeps white body copy legible). On reload the site opens on brand navy; the choice is never persisted.
+**What to build:** A visitor sees a second, visually-subordinate button — "Ambient Hue" (renamed from the ticket's original "Choose Color" in commit 8e4e9a9) — beside the hero's "View Work" CTA. Activating it opens a small popover with a single blend slider, endpoints **blue ↔ yellow**. Dragging recolors the site-wide Live Proof field live: the blended color journeys along the **hue path** (blue → teal → green → deep goldenrod) — never muddy RGB gray. Valleys stay near-black; ridge/accent tints derive from the chosen hue at a **capped luminance** (the yellow end is a deep goldenrod, not bright yellow — the brightness ceiling keeps white body copy legible). On reload the site opens on brand navy; the choice is never persisted.
 
 **Blocked by:** None — can start immediately.
 
@@ -21,18 +21,18 @@ Work the **frontier**: any ticket whose blockers are all done. T2 and T3 can run
 
 **What to build:** With the Ambient Hue slider in place, every accent-colored element (heading spans, case-study flags, hover borders) derives its color live from the current hue instead of a fixed token. The derivation is contrast-based: *lighter on dark hues, darker on light hues* — the polarity flip is visible as the visitor drags toward the yellow end. The teal/green midpoints are the designated stress cases (ADR-0004).
 
-**Blocked by:** T1 — Ambient Hue core: "Choose Color" slider drives the Live Proof field.
+**Blocked by:** T1 — Ambient Hue core: "Ambient Hue" slider drives the Live Proof field.
 
 - [x] All accent text/UI follows the current hue live while dragging
 - [x] Accent is lighter than the field on dark hues and darker on light hues (visible polarity flip toward yellow)
 - [x] Teal and green midpoints remain readable (accent text, flags, hovers)
-- [x] No hardcoded accent token remains — the Ambient Hue is the single source of truth
+- [x] The Ambient Hue is the single source of truth at runtime — the `@theme` token in index.css remains solely as the no-JS fallback (t = 0 reproduces it byte-for-byte; rationale in `accentHueBinding.js`)
 
 ## T3 — Hero bulge tint follows the Ambient Hue
 
 **What to build:** The 3D "JUAN" hero's bulge tint rides the current Ambient Hue while the letterforms stay white-dominant — form and motion are never visitor-remixed (CONTEXT.md, *Signature Moment*). At every slider position, the hero's soft-fade bottom edge must show **no hue seam** between the field and the hero bulges. The field remains occluded behind the hero exactly as today (ADR-0003 unchanged); default is brand navy.
 
-**Blocked by:** T1 — Ambient Hue core: "Choose Color" slider drives the Live Proof field.
+**Blocked by:** T1 — Ambient Hue core: "Ambient Hue" slider drives the Live Proof field.
 
 - [x] Hero bulge tint tracks the slider live; letterform base stays near-white
 - [x] No hue seam at the hero fade edge at any slider position (test at least blue / teal / green / goldenrod)

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { FBM_GLSL } from './fbm.glsl.js';
 import { ambientHuePalette } from '../../color/ambientHue.js';
+import { toThreeColor } from '../../color/threeColor.js';
 
 const DEFAULTS = {
   intensity: 1.2, // per-instance brightness/reveal strength; auto-derated on small screens
@@ -52,12 +53,10 @@ export function createLiveProofScene(canvas, options = {}) {
       : config.intensity;
 
   // Ambient Hue palette (ADR-0004): the whole palette rides uniforms written
-  // in place by setAmbientHue. setRGB is authored-value passthrough —
-  // deliberately NOT the hex constructor, which would round-trip through sRGB
-  // ColorManagement. `base` never varies (the near-black legibility floor is
-  // never remixed) but shares the same path so the palette has ONE source of
-  // truth (ambientHue.js).
-  const toColor = ({ r, g, b }) => new THREE.Color().setRGB(r, g, b);
+  // in place by setAmbientHue (converted via the shared toThreeColor —
+  // authored-value passthrough, see threeColor.js). `base` never varies (the
+  // near-black legibility floor is never remixed) but shares the same path so
+  // the palette has ONE source of truth (ambientHue.js).
   const initialPalette = ambientHuePalette(0);
 
   const uniforms = {
@@ -67,9 +66,9 @@ export function createLiveProofScene(canvas, options = {}) {
     uScroll: { value: 0 },
     uReveal: { value: 0 },
     uIntensity: { value: baseIntensity },
-    uColorBase: { value: toColor(initialPalette.base) },
-    uColorRidge: { value: toColor(initialPalette.ridge) },
-    uColorAccent: { value: toColor(initialPalette.accent) },
+    uColorBase: { value: toThreeColor(initialPalette.base) },
+    uColorRidge: { value: toThreeColor(initialPalette.ridge) },
+    uColorAccent: { value: toThreeColor(initialPalette.accent) },
   };
 
   // Interaction targets (cursor + scroll + reveal). The RAF loop eases the
@@ -267,9 +266,9 @@ export function createLiveProofScene(canvas, options = {}) {
    */
   const setAmbientHue = (t) => {
     const palette = ambientHuePalette(t);
-    uniforms.uColorBase.value.copy(toColor(palette.base));
-    uniforms.uColorRidge.value.copy(toColor(palette.ridge));
-    uniforms.uColorAccent.value.copy(toColor(palette.accent));
+    uniforms.uColorBase.value.copy(toThreeColor(palette.base));
+    uniforms.uColorRidge.value.copy(toThreeColor(palette.ridge));
+    uniforms.uColorAccent.value.copy(toThreeColor(palette.accent));
     if (config.reducedMotion) renderer.render(scene, camera);
   };
 

@@ -3,6 +3,7 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { SNOISE_GLSL } from './simplex.glsl.js';
 import { ambientHuePalette } from '../../color/ambientHue.js';
+import { toThreeColor } from '../../color/threeColor.js';
 
 const DEFAULTS = {
   text: 'JUAN',
@@ -54,11 +55,9 @@ export function createHeroScene(canvas, options = {}) {
   // same `accent` anchor as the Live Proof field's crests, so the hero's
   // soft-fade bleed edge (ADR-0003) stays hue-matched to the field at every
   // slider position — a fixed navy hero over a goldenrod field would seam.
-  // setRGB is authored-value passthrough — deliberately NOT the hex
-  // constructor, which would round-trip through sRGB ColorManagement
-  // (mirrors createLiveProofScene). At t=0 the anchor IS the brand navy the
+  // Palette anchors convert via the shared toThreeColor (authored-value
+  // passthrough, see threeColor.js). At t=0 the anchor IS the brand navy the
   // hero hardcoded before (#1E3A8A), so the default renders unchanged.
-  const toColor = ({ r, g, b }) => new THREE.Color().setRGB(r, g, b);
   const initialHot = ambientHuePalette(0).accent;
 
   const uniforms = {
@@ -67,7 +66,7 @@ export function createHeroScene(canvas, options = {}) {
     uScroll: { value: 0 },
     uAmp: { value: baseAmp },
     uFreq: { value: 1.4 },
-    uColorHot: { value: toColor(initialHot) },
+    uColorHot: { value: toThreeColor(initialHot) },
   };
 
   // Interaction targets (cursor + scroll). The RAF loop eases the uniforms toward
@@ -255,7 +254,7 @@ export function createHeroScene(canvas, options = {}) {
    * `build()` then renders with whatever the uniform already holds).
    */
   const setAmbientHue = (t) => {
-    uniforms.uColorHot.value.copy(toColor(ambientHuePalette(t).accent));
+    uniforms.uColorHot.value.copy(toThreeColor(ambientHuePalette(t).accent));
     if (config.reducedMotion && mesh) renderer.render(scene, camera);
   };
 
