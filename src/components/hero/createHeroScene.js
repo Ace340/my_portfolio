@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { SNOISE_GLSL } from './simplex.glsl.js';
+import { ambientHuePalette } from '../../color/ambientHue.js';
 
 const DEFAULTS = {
   text: 'JUAN',
@@ -33,9 +34,11 @@ const isMobileViewport = () =>
  * @param {{ text?: string, fontUrl?: string, amp?: number, reducedMotion?: boolean }} [options]
  *   `amp` sets the desktop displacement strength (mobile auto-derates to ~55%).
  *   `reducedMotion` renders a single static frame with no input/RAF wiring.
- * @returns {{ dispose: () => void, uniforms: Record<string, THREE.IUniform>, setPointer: (x: number, y: number) => void, setScroll: (v: number) => void }}
+ * @returns {{ dispose: () => void, uniforms: Record<string, THREE.IUniform>, setPointer: (x: number, y: number) => void, setScroll: (v: number) => void, setAmbientHue: (v: number) => void }}
  *   `dispose` tears down RAF + listeners + GPU resources. `setPointer`/`setScroll`
- *   feed the eased interaction targets. `uniforms` is exposed for direct inspection/debug.
+ *   feed the eased interaction targets. `setAmbientHue(t)` recolors the bulge
+ *   tint along the ADR-0004 hue path (0 = brand navy; T3). `uniforms` is exposed
+ *   for direct inspection/debug.
  *   On small screens or under sustained <30fps the renderer caps DPR and steps
  *   `uAmp` down (one-way) so the scene degrades gracefully.
  */
@@ -47,12 +50,24 @@ export function createHeroScene(canvas, options = {}) {
   const isMobile = isMobileViewport();
   const baseAmp = config.reducedMotion ? 0 : (isMobile ? config.amp * 0.55 : config.amp);
 
+  // Ambient Hue palette (ADR-0004 #3, ticket T3): the bulge tint rides the
+  // same `accent` anchor as the Live Proof field's crests, so the hero's
+  // soft-fade bleed edge (ADR-0003) stays hue-matched to the field at every
+  // slider position — a fixed navy hero over a goldenrod field would seam.
+  // setRGB is authored-value passthrough — deliberately NOT the hex
+  // constructor, which would round-trip through sRGB ColorManagement
+  // (mirrors createLiveProofScene). At t=0 the anchor IS the brand navy the
+  // hero hardcoded before (#1E3A8A), so the default renders unchanged.
+  const toColor = ({ r, g, b }) => new THREE.Color().setRGB(r, g, b);
+  const initialHot = ambientHuePalette(0).accent;
+
   const uniforms = {
     uTime: { value: 0 },
     uMouse: { value: new THREE.Vector2(0, 0) },
     uScroll: { value: 0 },
     uAmp: { value: baseAmp },
     uFreq: { value: 1.4 },
+    uColorHot: { value: toColor(initialHot) },
   };
 
   // Interaction targets (cursor + scroll). The RAF loop eases the uniforms toward
@@ -99,11 +114,14 @@ export function createHeroScene(canvas, options = {}) {
       varying float vDistort;
       varying vec3 vNormalView;
       varying vec3 vViewDir;
+      uniform vec3 uColorHot;
 
       void main() {
-        // base near-white; bulges tint toward the brand navy (#1e3a8a)
+        // base near-white; bulge tint rides the Ambient Hue (uColorHot is fed
+        // from the accent anchor in ambientHue.js — #1E3A8A brand navy at t=0,
+        // byte-identical to the pre-T3 hardcoded constant; ADR-0004 #3, T3)
         vec3 base = vec3(0.95, 0.95, 0.98);
-        vec3 hot  = vec3(0.118, 0.227, 0.541);
+        vec3 hot  = uColorHot;
         vec3 col = mix(base, hot, smoothstep(-0.05, 0.18, vDistort));
         // fresnel rim for readable 3D depth
         float fres = pow(1.0 - max(dot(normalize(vNormalView), normalize(vViewDir)), 0.0), 2.5);
@@ -226,6 +244,21 @@ export function createHeroScene(canvas, options = {}) {
     target.scroll = v;
   };
 
+  /**
+   * Ambient Hue 0..1 (ADR-0004 #3, ticket T3). Recolors the bulge tint
+   * uniform in place from the shared hue-path anchors — the letterform base
+   * stays near-white and form/motion are untouched (CONTEXT.md "Signature
+   * Moment": only the color treatment follows the hue). Uniform values
+   * re-upload every frame, so no flags are needed. Under reduced motion there
+   * is no RAF loop: re-render the static poster once so it reflects the
+   * chosen hue (before the async font load the mesh may not exist yet —
+   * `build()` then renders with whatever the uniform already holds).
+   */
+  const setAmbientHue = (t) => {
+    uniforms.uColorHot.value.copy(toColor(ambientHuePalette(t).accent));
+    if (config.reducedMotion && mesh) renderer.render(scene, camera);
+  };
+
   const dispose = () => {
     disposed = true;
     cancelAnimationFrame(raf);
@@ -236,5 +269,5 @@ export function createHeroScene(canvas, options = {}) {
     renderer.dispose();
   };
 
-  return { dispose, uniforms, setPointer, setScroll };
+  return { dispose, uniforms, setPointer, setScroll, setAmbientHue };
 }

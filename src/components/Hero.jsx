@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { createHeroScene } from './hero/createHeroScene.js';
 import AmbientHueControl from './ambient/AmbientHueControl.jsx';
+import { subscribeAmbientHue } from '../color/ambientHueStore.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,6 +68,16 @@ const Hero = () => {
     },
     { scope: rootRef, dependencies: [] },
   );
+
+  // 4. Ambient Hue → bulge tint (ADR-0004 #3, ticket T3): the subscription
+  //    lives in the shell, the setter in the factory (LiveProof.jsx pattern).
+  //    The store notifies immediately on subscribe, so remounts re-apply the
+  //    session hue; uniform mutation is the channel, so drags never re-render
+  //    React. Hero's scene never remounts, hence deps [].
+  useEffect(() => {
+    if (!canvasRef.current) return undefined;
+    return subscribeAmbientHue((t) => apiRef.current?.setAmbientHue(t));
+  }, []);
 
   return (
     <section id="hero" ref={rootRef} className="overflow-hidden">

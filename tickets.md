@@ -34,10 +34,10 @@ Work the **frontier**: any ticket whose blockers are all done. T2 and T3 can run
 
 **Blocked by:** T1 — Ambient Hue core: "Choose Color" slider drives the Live Proof field.
 
-- [ ] Hero bulge tint tracks the slider live; letterform base stays near-white
-- [ ] No hue seam at the hero fade edge at any slider position (test at least blue / teal / green / goldenrod)
-- [ ] Occlusion and reduced-motion behavior behind the hero unchanged
-- [ ] Default (no interaction) renders the current brand navy exactly as today
+- [x] Hero bulge tint tracks the slider live; letterform base stays near-white
+- [x] No hue seam at the hero fade edge at any slider position (test at least blue / teal / green / goldenrod)
+- [x] Occlusion and reduced-motion behavior behind the hero unchanged
+- [x] Default (no interaction) renders the current brand navy exactly as today
 
 ## T4 — Ambient Hue — range QA + guardrails
 
