@@ -22,7 +22,7 @@ A visitor (recruiter) lands and, within seconds:
 
 ## 3. Scope
 
-**In:** new reactive-3D-type hero, repositioned copy, restructured section order, case-study project reveals, scroll motion spine, two passion sections (Level Design, Film/Photo) plus a small Music/Mints corner, XR de-brand.
+**In:** new reactive-3D-type hero, repositioned copy, restructured section order, case-study project reveals, scroll motion spine, two passion sections (Level Design, Film/Photo) plus a small Music/Mints corner, XR de-brand. *(Amended 2026-10-27, ADR-0005: the **Second Identity page — Video Editing** is now in scope — a second route sharing the site brand. The main-site Film & Photography section shrinks to a teaser Bridge, since La Playa Vision's canonical home moved to the video page.)*
 
 **Out (this phase):** blog/CMS, i18n, backend.
 
@@ -33,9 +33,10 @@ A visitor (recruiter) lands and, within seconds:
 3. **Selected Work** — 3 case-study reveals: Mints-on-the-House site, Pangea, Soluciones Fino
 4. **Tech Stack** — front-end-focused (Unity stays *under gamedev*; XR rows dropped)
 5. **Beyond the code → Level Design** — flythrough video + blueprint still + intention caption
-6. **Beyond the code → Film & Photography** — curated selects / La Playa Vision
+6. **Beyond the code → Film & Photography** — curated selects / La Playa Vision *(Amended 2026-10-27, ADR-0005: demoted to a **teaser Bridge** — La Playa Vision's canonical home is now the Second Identity's page; this section's job is to hand visitors over.)*
 7. **Beyond the code → Music (Mints on the House)** — small tertiary corner (link + one line), kept clearly subordinate so the Funnel stays intact
 8. **Contact** — sharpened CTA
+9. *(Added 2026-10-27, ADR-0005)* **Second Identity page — Video Editing** — a separate route *outside this Funnel*: video portfolio via La Playa Vision + Destapando el Arte, same brand and chrome, reached from the navbar; carries its own Bridge back to the main site.
 
 ## 5. Interaction design
 
@@ -64,7 +65,8 @@ A visitor (recruiter) lands and, within seconds:
 - [ ] About Live Proof shader — fragment/2D-field GLSL, responsive-ambient (plan §5C); **policy: rewrite-from-scratch** (ADR-0002). Author of the Shadertoy reference contacted in parallel as courtesy.
 - [ ] Projects: pick the 3 case studies + 1–2 line copy + fresh screenshots/recordings each
 - [ ] Level Design: pick the level + host the flythrough video + 1 blueprint still + 1 intention sentence
-- [ ] Film/Photo: curated selects (grid vs carousel?) + La Playa Vision embed/stills
+- [ ] Film/Photo: curated selects (grid vs carousel?) + La Playa Vision embed/stills *(Amended 2026-10-27, ADR-0005: this is now a **teaser Bridge** — one embed/still + hand-off CTA, not a full showcase; the full showcase lives on the video page.)*
+- [ ] Video Editing page: channel assets (La Playa Vision + Destapando el Arte embeds/stills), Second Identity hero copy, navbar entry, Bridge CTAs in both directions
 - [x] Decide: Music/Mints — **keep** as a small tertiary corner (2026-07-10)
 - [x] Confirmed: mobile = degrade-gracefully
 

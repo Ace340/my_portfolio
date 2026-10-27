@@ -5,12 +5,17 @@
 
 ## Identities
 
-- **Primary Identity** — *Front-end Creative Developer*. The role the site exists to get hired for; owns the hero and the dominant real estate. Three.js / WebGL / GSAP are *core* skills here, not side notes.
-- **Passion Track** — a creative discipline showcased as an *addition* to the Primary Identity, not a rival for attention. Proven tracks: *Level Design* (maps, blueprints, models, games) and *Film & Photography*. *Music (Mints on the House)*: kept — as a small, clearly-subordinate tertiary corner (decided 2026-07-10; see `docs/plan.md` §4). Kept *small* on purpose so the Funnel stays intact.
+- **Primary Identity** — *Front-end Creative Developer*. The role the site exists to get hired for; owns the hero and the dominant real estate. Three.js / WebGL / GSAP are *core* skills here, not side notes. (2026-10-27: now one of *two* hireable identities — see **Second Identity**; still owns the main landing page.)
+- **Second Identity** — *Video Editor*. A second hireable identity (decided 2026-10-27; ADR-0005): the site also exists to win video-editing work. Lives on a **dedicated page outside the main landing page**, with its own funnel. Deliberately re-admits the *Parallel* structure the Funnel was chosen against — scoped to one page; the main site's Funnel is untouched.
+- **Video Editing** — the Second Identity's discipline. Canonical term (the false friend *Video Edition* is retired). Portfolio shown via the owner's YouTube channels: *La Playa Vision* and *Destapando el Arte*.
+- **La Playa Vision** — the owner's YouTube channel. Its **canonical home** is the Second Identity's page (decided 2026-10-27; see ADR-0005). Formerly the Film & Photography Passion Track's showcase on the main site; the main site now retains only a subordinate teaser (a **Bridge**).
+- **Destapando el Arte** — the owner's YouTube channel and Instagram page dedicated to uncovering stories from art pieces and movies. A Second Identity portfolio channel.
+- **Passion Track** — a creative discipline showcased as an *addition* to the Primary Identity, not a rival for attention. Proven tracks: *Level Design* (maps, blueprints, models, games) and *Film & Photography*. *Music (Mints on the House)*: kept — as a small, clearly-subordinate tertiary corner (decided 2026-07-10; see `docs/plan.md` §4). Kept *small* on purpose so the Funnel stays intact. (2026-10-27: Film & Photography's showcase channel, *La Playa Vision*, moved to the Second Identity's page as its canonical home — the main-site section survives as a subordinate teaser; see ADR-0005.)
 
 ## Structure
 
-- **Funnel** — the site's information-architecture: Primary Identity dominant at the top; Passion Tracks confined to a smaller, clearly-secondary zone. Opposed to *Parallel* (equal-weight sections) and *Umbrella* (one brand spread over facets). Chosen over those because the site has a single primary job: earn a front-end interview.
+- **Funnel** — the site's information-architecture: Primary Identity dominant at the top; Passion Tracks confined to a smaller, clearly-secondary zone. Opposed to *Parallel* (equal-weight sections) and *Umbrella* (one brand spread over facets). Chosen over those because the main site has a single primary job: earn a front-end interview. (2026-10-27 amendment: still true *of the main site*; the site as a whole now runs **two funnels** — see **Second Identity**, ADR-0005.)
+- **Bridge** — a small, deliberately-subordinate affordance that hands a visitor from one identity's page to the other, in either direction (main site ↔ video page). A Bridge never rivals the Funnel CTA of the page it lives on. Examples: the main site's *"Hey I also create great videos"* CTA; the video page's glimpse back to web development. (Added 2026-10-27; see ADR-0005.)
 
 ## Interaction
 
