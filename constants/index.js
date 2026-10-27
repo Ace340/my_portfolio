@@ -12,6 +12,12 @@ const navLinks = [
 	title: "Game Dev",
  },
  {
+	id: "video-editing",
+	title: "Video Editing",
+	// Route link (react-router) — the Second Identity's page (ADR-0005).
+	to: "/video-editing",
+ },
+ {
 	id: "contact",
 	title: "Contact",
  },
@@ -218,6 +224,59 @@ const gameProjects = [
 	},
 ];
 
+// Video Editing page — Second Identity (ADR-0005, CONTEXT.md "Second Identity",
+// "Video Editing"). COPY IS PLACEHOLDER pending the design pass. Canonical term
+// is "Video Editing" — the false friend "Video Edition" is retired (CONTEXT.md).
+const videoPage = {
+	eyebrow: "Video Editing",
+	title: "Video Editor",
+	tagline:
+		"Juan Acevedo — stories told through the cut. Pacing, rhythm and sound across two channels.",
+	channelsTitle: "The channels",
+	urlPendingLabel: "Channel link coming soon",
+};
+
+// The Second Identity's portfolio channels (CONTEXT.md "La Playa Vision",
+// "Destapando el Arte"). La Playa Vision's canonical home is the video page;
+// the main site keeps only a teaser Bridge (ADR-0005).
+// TODO(owner): Destapando el Arte URLs + a cover image are pending.
+const videoChannels = [
+	{
+		id: "la-playa-vision",
+		name: "La Playa Vision",
+		tagline: "The world from a different perspective",
+		description:
+			"Exploring the world with my camera — and telling the story in the edit. Travel films, secret spots, and the cuts that carry them.",
+		url: "https://www.youtube.com/@LaPlayaVision",
+		image: "/images/playavision.png",
+	},
+	{
+		id: "destapando-el-arte",
+		name: "Destapando el Arte",
+		tagline: "Uncovering the stories behind art and movies",
+		description:
+			"A YouTube channel and Instagram page dedicated to uncovering the stories behind art pieces and movies — research, narrative, and rhythm.",
+		url: null, // TODO(owner): add the channel URL
+		image: null, // TODO(owner): add a cover image (a styled placeholder renders meanwhile)
+	},
+];
+
+// Bridges (CONTEXT.md "Bridge", ADR-0005) — small cross-links between the two
+// identity pages, in both directions. A Bridge never rivals the Funnel CTA of
+// the page it lives on; copy is placeholder pending owner review.
+const bridges = {
+	toVideo: {
+		to: "/video-editing",
+		line: "Hey — I also create great videos.",
+		cta: "Watch the reels",
+	},
+	toWebDev: {
+		to: "/",
+		line: "Every frame above was cut by someone who also builds for the web.",
+		cta: "See the front-end work",
+	},
+};
+
 export {
  gameReel,
  gameProjects,
@@ -228,4 +287,7 @@ export {
  allPassions,
  caseStudies,
  aboutCopy,
+ videoPage,
+ videoChannels,
+ bridges,
 };

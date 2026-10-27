@@ -123,6 +123,13 @@ html.lenis body {
         }
     }
 
+    /* Route links: react-router's NavLink sets aria-current="page" when its
+       route matches — the active identity page's nav item picks up the
+       Ambient-Hue accent token (ADR-0004). */
+    nav a[aria-current='page'] {
+        @apply text-accent;
+    }
+
     /* .noisy {
         @apply absolute inset-0 size-full bg-[url("/images/noise.png")];
     } */

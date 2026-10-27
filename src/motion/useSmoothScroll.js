@@ -20,6 +20,32 @@ const LENIS_OPTIONS = {
   anchors: true,
 };
 
+// Module-scoped holder for the live Lenis instance. `scrollToOnRouteChange`
+// (below) needs it because Lenis owns the scroll position: a bare
+// `window.scrollTo` on route change would be overridden by Lenis's internal
+// target on the next tick. Documented deviation from the "no global state"
+// rule (code-quality.md), same precedent as `ambientHueStore` (ADR-0004):
+// one writer (this hook's effect), one reader (route changes), lifecycle
+// owned by the hook.
+let activeLenis = null;
+
+/**
+ * Route-change scroll — used by `ScrollToTop`. Jumps instantly (no smoothing)
+ * to `0` or to a hash-target Element, keeping Lenis's internal position in
+ * sync. Falls back to native scroll when Lenis is absent (reduced motion).
+ *
+ * @param {number | Element} target
+ */
+export function scrollToOnRouteChange(target) {
+  if (activeLenis) {
+    activeLenis.scrollTo(target, { immediate: true });
+  } else if (target instanceof Element) {
+    target.scrollIntoView();
+  } else if (typeof window !== 'undefined') {
+    window.scrollTo(0, 0);
+  }
+}
+
 /**
  * Wire Lenis smooth-scroll into GSAP ScrollTrigger — the site's motion spine.
  *
@@ -39,6 +65,7 @@ export function useSmoothScroll() {
     if (prefersReducedMotion()) return undefined;
 
     const lenis = new Lenis(LENIS_OPTIONS);
+    activeLenis = lenis;
     lenis.on('scroll', ScrollTrigger.update);
 
     // GSAP's ticker time is in seconds; Lenis.raf expects milliseconds.
@@ -52,6 +79,7 @@ export function useSmoothScroll() {
     return () => {
       gsap.ticker.remove(tick);
       lenis.destroy();
+      activeLenis = null;
     };
   }, []);
 }
