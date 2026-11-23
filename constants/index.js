@@ -277,7 +277,22 @@ const bridges = {
 	},
 };
 
+// Reel hero (CONTEXT.md "Reel", ADR-0006) — the video page opens with the
+// Reel as its hero: a self-hosted, chrome-less muted looping excerpt. The
+// full Reel (sound on) lives on its canonical channel, La Playa Vision —
+// the hero CTA hands off there. Canonical watch URL pinned 2026-11-23.
+// TODO(owner): render the hero excerpt into /videos/reel/reel-hero-loop.mp4 —
+// until then the hero degrades gracefully to its poster.
+const reelHero = {
+	poster: "/videos/reel/reel-hero-poster.jpg",
+	loopVideo: "/videos/reel/reel-hero-loop.mp4",
+	reelTitle: "From Raw Footage to Cinematic: 2026 Demo Reel",
+	watchUrl: "https://youtu.be/IG5n_Kx9mIo",
+	watchLabel: "Watch with sound",
+};
+
 export {
+ reelHero,
  gameReel,
  gameProjects,
  navLinks,

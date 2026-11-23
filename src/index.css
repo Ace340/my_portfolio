@@ -196,6 +196,50 @@ html.lenis body {
         @apply w-full md:h-[80%] h-1/2 absolute bottom-0 left-0 md:object-contain object-bottom object-cover;
     }
 
+    /* Reel hero (ADR-0006): the Second Identity page's hero — the Reel in a
+       CONTAINED stage card (repo-reel pattern, cf. #gamedev .reel), not a
+       full-bleed backdrop. Overrides the site-wide `video` rule above (built
+       for the main hero's scroll-scrubbed strip): #reel-hero video wins on
+       specificity (1,0,1 > 0,0,1), same @layer. Unlike the main site's hero,
+       this section is TRANSPARENT — the Live Proof field shows through from
+       the very top (owner request 2026-11-23): the card stays opaque so the
+       field never rivals the Reel (CONTEXT.md "Live Proof" recessive clause;
+       deviates from ADR-0003's occlusion pattern deliberately, on this page
+       only). */
+    #reel-hero {
+        @apply relative z-10 w-full overflow-hidden py-24 md:py-32;
+
+        .reel-stage {
+            @apply relative mx-auto mt-12 block overflow-hidden rounded-3xl aspect-video max-w-5xl;
+        }
+
+        .reel-media {
+            @apply absolute inset-0 size-full object-cover;
+        }
+
+        .reel-caption {
+            @apply absolute inset-x-0 bottom-0 flex flex-wrap items-center justify-between gap-4 p-6 md:p-8;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.85) 0%,
+                rgba(0, 0, 0, 0.35) 50%,
+                transparent 100%
+            );
+        }
+
+        .reel-title {
+            @apply text-left font-modern-negra text-xl md:text-2xl;
+        }
+
+        .reel-cta {
+            @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold uppercase tracking-widest transition-colors;
+        }
+
+        .reel-cta:hover {
+            @apply border-accent text-accent;
+        }
+    }
+
     #techstack {
         @apply relative min-h-dvh w-full overflow-hidden;
 
