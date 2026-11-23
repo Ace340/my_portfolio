@@ -278,17 +278,18 @@ const bridges = {
 };
 
 // Reel hero (CONTEXT.md "Reel", ADR-0006) — the video page opens with the
-// Reel as its hero: a self-hosted, chrome-less muted looping excerpt. The
-// full Reel (sound on) lives on its canonical channel, La Playa Vision —
-// the hero CTA hands off there. Canonical watch URL pinned 2026-11-23.
+// Reel as its hero: a self-hosted, chrome-less looping excerpt that starts
+// SILENT on entry; an on-card mute toggle hands sound to the visitor (owner
+// decision 2026-11-23 — the "watch with sound" CTA was removed). The full
+// Reel (sound on) stays on its canonical channel, La Playa Vision (channels
+// grid reaches it); canonical watch URL is pinned in ADR-0006.
 // TODO(owner): render the hero excerpt into /videos/reel/reel-hero-loop.mp4 —
-// until then the hero degrades gracefully to its poster.
+// it must carry its AUDIO TRACK (the toggle unmutes it). Until then the hero
+// degrades gracefully to its poster.
 const reelHero = {
 	poster: "/videos/reel/reel-hero-poster.jpg",
 	loopVideo: "/videos/reel/reel-hero-loop.mp4",
 	reelTitle: "From Raw Footage to Cinematic: 2026 Demo Reel",
-	watchUrl: "https://youtu.be/IG5n_Kx9mIo",
-	watchLabel: "Watch with sound",
 };
 
 export {

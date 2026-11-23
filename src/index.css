@@ -231,12 +231,23 @@ html.lenis body {
             @apply text-left font-modern-negra text-xl md:text-2xl;
         }
 
-        .reel-cta {
-            @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold uppercase tracking-widest transition-colors;
+        /* Mute toggle (owner decision 2026-11-23): glassy circular control,
+           starts muted (autoplay policy), unmute opts into the excerpt's
+           own audio. Replaces the removed "watch with sound" CTA. */
+        .reel-sound {
+            @apply flex size-10 shrink-0 items-center justify-center rounded-full border border-white/30 bg-black/40 text-white/90 backdrop-blur-sm transition-colors;
         }
 
-        .reel-cta:hover {
+        .reel-sound:hover {
             @apply border-accent text-accent;
+        }
+
+        .reel-sound:focus-visible {
+            @apply outline-none ring-2 ring-accent;
+        }
+
+        .reel-sound svg {
+            @apply size-5;
         }
     }
 

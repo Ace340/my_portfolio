@@ -37,6 +37,14 @@ The hero excerpt is a static video asset in the existing Vite build (native `<vi
 
 **Canonical watch URL (pinned 2026-11-23):** `https://youtu.be/IG5n_Kx9mIo` — *From Raw Footage to Cinematic: 2026 Demo Reel*, published on *La Playa Vision* (re-uploaded there from the personal channel; that channel's copy — *The Best Of My Work: 2026 Demo Reel* — remains archive-only).
 
+### Amendment (2026-11-23): sound moves on-card — mute toggle replaces the CTA
+
+Same-day owner decision after seeing the contained hero in situ:
+
+1. The hero CTA ("Watch with sound →" anchor) is **removed**. Sound control is instead an **on-card mute/unmute toggle**: the excerpt starts silently the moment the page opens (browser autoplay policy requires muted start), and the visitor opts into the excerpt's own audio on the card.
+2. Implementation consequence update: the hero excerpt MP4 must now **carry its audio track** (it starts muted; the toggle unmutes it). The toggle doubles as a play resume in case any environment blocks autoplay.
+3. What does *not* change: the canonical watch home for the **full Reel (sound on)** remains *La Playa Vision* (reached via the channels grid); the decision's split, canonical-home logic, and archive-only rule stand. On-card sound is the *excerpt's* sound under visitor control — not the full watch.
+
 ## Consequences
 
 **(+) Upside**
